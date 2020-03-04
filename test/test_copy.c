@@ -5,7 +5,7 @@
 
 #include "flop.h"
 
-#define    NB_FOIS        4194304
+#define NB_FOIS 419430
 
 int is_equal_float(float *f1, float *f2, const int N) {
   for (int i = 0; i < N; i++) {
@@ -34,6 +34,7 @@ int main (int argc, char **argv)
  double *d2 = (double *) malloc(sizeof(double) * taille_tab);
 
  unsigned long long int start, end ;
+ int i;
 
  printf("\n");
  printf("Tests des fonctions de copy\n");
@@ -48,9 +49,11 @@ int main (int argc, char **argv)
  }
  init_flop () ;
  start = _rdtsc () ;
- mncblas_scopy(taille_tab, f1, 1, f2, 1);
+ for (i = 0; i < NB_FOIS; i ++) {
+    mncblas_scopy(taille_tab, f1, 1, f2, 1);
+ }
  end = _rdtsc () ;
- printf ("La copie d'un tableau de float de 0 à %d: %lld cycles \n", taille_tab, end-start) ;
+ printf ("La copie d'un tableau de vecteur de float simple précision, de 0 à %d: %lld cycles \n", taille_tab, end-start) ;
  calcul_flop ("mncblas_scopy ", NB_FOIS*4, end-start) ;
  if (is_equal_float(f1,f2, taille_tab) != 1) {
    printf("Erreur copie mncblas_scopy\n");
@@ -65,9 +68,11 @@ int main (int argc, char **argv)
    d1[var] = (double) var;
  }
  start = _rdtsc () ;
- mncblas_dcopy(taille_tab, d1, 1, d2, 1);
+ for (i = 0; i < NB_FOIS; i ++) {
+    mncblas_dcopy(taille_tab, d1, 1, d2, 1);
+ }
  end = _rdtsc () ;
- printf ("La copie d'un tableau de double de 0 à %d: %lld cycles \n", taille_tab, end-start) ;
+ printf ("La copie d'un tableau de vecteur de double simple précision, de 0 à %d: %lld cycles \n", taille_tab, end-start) ;
  calcul_flop ("mncblas_dcopy ", NB_FOIS*4, end-start) ;
  if (is_equal_double(d1,d2, taille_tab) != 1) {
    printf("Erreur copie mncblas_dcopy\n");
@@ -83,9 +88,11 @@ int main (int argc, char **argv)
  f2 = (float *) malloc(sizeof(float) * taille_tab);
  init_flop () ;
  start = _rdtsc () ;
- mncblas_ccopy(taille_tab / 2, f1, 1, f2, 1);
+ for (i = 0; i < NB_FOIS; i ++) {
+   mncblas_ccopy(taille_tab / 2, f1, 1, f2, 1);
+ }
  end = _rdtsc () ;
- printf ("La copie d'un tableau de float de 0 à %d:  %lld cycles \n", taille_tab, end-start) ;
+ printf ("La copie d'un tableau de vecteur de float double précision, de 0 à %d:  %lld cycles \n", taille_tab, end-start) ;
  calcul_flop ("mncblas_ccopy ", NB_FOIS*4, end-start) ;
  if (is_equal_float(f1,f2, taille_tab) != 1) {
    printf("Erreur copie mncblas_ccopy\n");
@@ -98,9 +105,11 @@ int main (int argc, char **argv)
 
  d2 = (double *) malloc(sizeof(double) * taille_tab);
  start = _rdtsc () ;
+ for (i = 0; i < NB_FOIS; i ++) {
  mncblas_zcopy(taille_tab / 2, d1, 1, d2, 1);
+ }
  end = _rdtsc () ;
- printf ("La copie d'un tableau de double de 0 à %d: %lld cycles \n", taille_tab, end-start) ;
+ printf ("La copie d'un tableau de vecteur de double double précision, de 0 à %d: %lld cycles \n", taille_tab, end-start) ;
  calcul_flop ("mncblas_zcopy ", NB_FOIS*4, end-start) ;
  if (is_equal_double(d1,d2, taille_tab) != 1) {
    printf("Erreur copie mncblas_zcopy\n");
