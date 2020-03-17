@@ -51,37 +51,75 @@ double mncblas_ddot(const int N, const double *X, const int incX,
 
   return dot ;
 
-  return 0.0;
 }
 
 void   mncblas_cdotu_sub(const int N, const void *X, const int incX,
                        const void *Y, const int incY, void *dotu)
 {
-  /* a completer */
+  register unsigned int i = 0 ;
+  register unsigned int j = 0 ;
 
-  return ;
+  *((float *) dotu) = 0;
+  *(((float *) dotu) + 1) = 0;
+
+  for (i = 0 ; i < N ; i += incX) {
+
+    *((float *) dotu) += (((float *) X) [2 * i] * ((float *) Y) [2 * j]) - (((float *) X) [2 * i + 1] * ((float *) Y) [2 * j + 1]);
+    *(((float *) dotu) + 1) += (((float *) X) [2 * i + 1] * ((float *) Y) [2 * j + 1]) - (((float *) X) [2 * i + 1] * ((float *) Y) [2 * j]);
+    j+= incY;
+  }
+
 }
 
 void   mncblas_cdotc_sub(const int N, const void *X, const int incX,
                        const void *Y, const int incY, void *dotc)
 {
-  /* a completer */
+  register unsigned int i = 0 ;
+  register unsigned int j = 0 ;
 
-  return ;
+  *((float *) dotc) = 0;
+  *(((float *) dotc) + 1) = 0;
+
+  for (i = 0 ; i < N ; i += incX) {
+
+    *((float *) dotc) += (((float *) X) [2 * i] * ((float *) Y) [2 * j]) + (((float *) X) [2 * i + 1] * ((float *) Y) [2 * j + 1]);
+    *(((float *) dotc) + 1) += (-1 * ((float *) X) [2 * i + 1] * ((float *) Y) [2 * j + 1]) - (-1 * ((float *) X) [2 * i + 1] * ((float *) Y) [2 * j]);
+    j+= incY;
+  }
 }
 
 void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
                        const void *Y, const int incY, void *dotu)
 {
-  /* a completer */
+  register unsigned int i = 0 ;
+  register unsigned int j = 0 ;
 
-  return ;
+  *((double *) dotu) = 0;
+  *(((double *) dotu) + 1) = 0;
+
+  for (i = 0 ; i < N ; i += incX) {
+
+    *((double *) dotu) += (((double *) X) [2 * i] * ((double *) Y) [2 * j]) - (((double *) X) [2 * i + 1] * ((double *) Y) [2 * j + 1]);
+    *(((double *) dotu) + 1) += (((double *) X) [2 * i + 1] * ((double *) Y) [2 * j + 1]) - (((double *) X) [2 * i + 1] * ((double *) Y) [2 * j]);
+    j+= incY;
+  }
 }
 
 void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
                        const void *Y, const int incY, void *dotc)
 {
-  /* a completer */
+  register unsigned int i = 0 ;
+  register unsigned int j = 0 ;
+
+  *((double *) dotc) = 0;
+  *(((double *) dotc) + 1) = 0;
+
+  for (i = 0 ; i < N ; i += incX) {
+
+    *((double *) dotc) += (((double *) X) [2 * i] * ((double *) Y) [2 * j]) + (((double *) X) [2 * i + 1] * ((double *) Y) [2 * j + 1]);
+    *(((double *) dotc) + 1) += (-1 * ((double *) X) [2 * i + 1] * ((double *) Y) [2 * j + 1]) - (-1 * ((double *) X) [2 * i + 1] * ((double *) Y) [2 * j]);
+    j+= incY;
+  }
 
   return ;
 }
