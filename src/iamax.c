@@ -30,8 +30,8 @@ CBLAS_INDEX mnblas_icamax(const int N, const void   *X, const int incX) {
   if ((N < 0) || (incX < 0)) return 0;
   register unsigned int i = 0 ;
   CBLAS_INDEX res = i;
-  float * Xp = (float *)Xp;
-  float val = absf(Xp[2 * res]) + absf(Xp[2 * res + 1]);
+  float * Xp = (float *)X;
+  float val = absf(Xp[2 * i]) + absf(Xp[2 * i + 1]);
   float tmp_val;
   for (; (i < N) ; i += incX) {
     tmp_val = absf(Xp[2 * i]) + absf(Xp[2 * i + 1]);
