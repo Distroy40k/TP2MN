@@ -54,7 +54,7 @@ int main (int argc, char **argv)
  }
  end = _rdtsc () ;
  printf ("La copie d'un tableau de vecteur de float simple précision, de 0 à %d: %lld cycles \n", taille_tab, end-start) ;
- calcul_flop ("mncblas_scopy ", NB_FOIS*4, end-start) ;
+ calcul_octet ("mncblas_scopy ", NB_FOIS*4*taille_tab, end-start) ;
  if (is_equal_float(f1,f2, taille_tab) != 1) {
    printf("Erreur copie mncblas_scopy\n");
    exit(1);
@@ -73,7 +73,7 @@ int main (int argc, char **argv)
  }
  end = _rdtsc () ;
  printf ("La copie d'un tableau de vecteur de double simple précision, de 0 à %d: %lld cycles \n", taille_tab, end-start) ;
- calcul_flop ("mncblas_dcopy ", NB_FOIS*4, end-start) ;
+ calcul_octet ("mncblas_dcopy ", NB_FOIS*4, end-start) ;
  if (is_equal_double(d1,d2, taille_tab) != 1) {
    printf("Erreur copie mncblas_dcopy\n");
    exit(1);
@@ -93,7 +93,7 @@ int main (int argc, char **argv)
  }
  end = _rdtsc () ;
  printf ("La copie d'un tableau de vecteur de float double précision, de 0 à %d:  %lld cycles \n", taille_tab, end-start) ;
- calcul_flop ("mncblas_ccopy ", NB_FOIS*4, end-start) ;
+ calcul_octet ("mncblas_ccopy ", NB_FOIS*4, end-start) ;
  if (is_equal_float(f1,f2, taille_tab) != 1) {
    printf("Erreur copie mncblas_ccopy\n");
    exit(1);
@@ -110,7 +110,7 @@ int main (int argc, char **argv)
  }
  end = _rdtsc () ;
  printf ("La copie d'un tableau de vecteur de double double précision, de 0 à %d: %lld cycles \n", taille_tab, end-start) ;
- calcul_flop ("mncblas_zcopy ", NB_FOIS*4, end-start) ;
+ calcul_octet ("mncblas_zcopy ", NB_FOIS*4, end-start) ;
  if (is_equal_double(d1,d2, taille_tab) != 1) {
    printf("Erreur copie mncblas_zcopy\n");
    exit(1);

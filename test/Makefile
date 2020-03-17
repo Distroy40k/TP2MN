@@ -1,4 +1,4 @@
-all: 
+all: test_copy
 
 INC_DIR=../include
 
@@ -13,12 +13,12 @@ OPTIONS_LINK_STATIC  =   -fopenmp -L$(LIB_DIR) $(LIBST)
 OPTIONS_LINK_DYN  = -fopenmp -L$(LIB_DIR) $(LIBDYN)
 
 
-#test_dot: test_dot.o flop.o $(LIB_DIR)/libmnblas.a
-#	gcc -o test_dot test_dot.o flop.o $(OPTIONS_LINK_STATIC)
+test_copy: test_copy.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_copy test_copy.o flop.o $(OPTIONS_LINK_STATIC)
 
-#test_dot.o: test_dot.c $(INC_DIR)/mnblas.h
-#	gcc $(OPTIONS_COMPIL) -c test_dot.c
+test_copy.o: test_copy.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_copy.c
 
 
 clean:
-	rm -f *.o *~
+	rm -f *.o test_copy *~
