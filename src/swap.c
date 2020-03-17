@@ -43,12 +43,12 @@ void mncblas_cswap(const int N, void *X, const int incX,
 
   for (; ((i < N) && (j < N)) ; i += incX, j+=incY)
     {
-      save = (float *)Y [2j] ;
-      (float *)Y [2j] = (float *)X [2i] ;
-      (float *)X [2i] = save ;
-      save = (float *)Y [2j+1] ;
-      (float *)Y [2j+1] = (float *)X [2i+1] ;
-      (float *)X [2i+1] = save ;
+      save = ((float *)Y) [2*j] ;
+      ((float *)Y) [2*j] = ((float *)X) [2*i] ;
+      ((float *)X) [2*i] = save ;
+      save = ((float *)Y) [2*j+1] ;
+      ((float *)Y) [2*j+1] = ((float *)X) [2*i+1] ;
+      ((float *)X) [2*i+1] = save ;
     }
   return ;
 }
@@ -62,12 +62,12 @@ void mncblas_zswap(const int N, void *X, const int incX,
 
   for (; ((i < N) && (j < N)) ; i += incX, j+=incY)
     {
-      save = (double *)Y [2j] ;
-      (double *)Y [2j] = (double *)X [2i] ;
-      (double *)X [2i] = save ;
-      save = (double *)Y [2j+1] ;
-      (double *)Y [2j+1] = (double *)X [2i+1] ;
-      (double *)X [2i+1] = save ;
+      save = ((double *)Y) [2*j] ;
+      ((double *)Y) [2*j] = ((double *)X) [2*i] ;
+      ((double *)X) [2*i] = save ;
+      save = ((double *)Y) [2*j+1] ;
+      ((double *)Y) [2*j+1] = ((double *)X) [2*i+1] ;
+      ((double *)X) [2*i+1] = save ;
     }
   return ;
 }
