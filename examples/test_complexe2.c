@@ -5,7 +5,6 @@
 #include "complexe2.h"
 
 #define    NB_FOIS        4194304
-
 #include "flop.h"
 
 int main (int argc, char **argv)
@@ -41,17 +40,23 @@ int main (int argc, char **argv)
  printf ("cd3.r %f cd3.i %f\n", cd3.real, cd3.imaginary) ;
 
  start =_rdtsc () ;
+
+ // Le compilateur n'ignore plus la répétition de la fonction (plus d'optimisation) C'est le cas des fonctions inline
+ // Afin d'obtenir une idée précise des performances du programme, on doit tromper le compilateur
  
- for (i = 0 ; i < NB_FOIS; i++)
+ for (i = 0 ; i < NB_FOIS; i++) 
+
    {
      cd3 = add_complexe_double (cd1, cd2) ;
+      cd1.real = cd1.real + 1 ;
+      cd1.imaginary = cd1.imaginary + 1 ;
    }
 
  end = _rdtsc () ;
 
   printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
 
-  calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ;
+  calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ; // Impact sur le nombre d'opérations flottantes
 
 
   // Partie multiplication
@@ -78,13 +83,16 @@ int main (int argc, char **argv)
  for (i = 0 ; i < NB_FOIS; i++)
    {
      cd3 = mult_complexe_double (cd1, cd2) ;
+     cd1.real = cd1.real + 1 ;
+    cd1.imaginary = cd1.imaginary + 1 ;
+
    }
 
  end = _rdtsc () ;
 
   printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
 
-  calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ;
+  calcul_flop ("calcul complexe ", NB_FOIS*8, end-start) ;
 
 
   // Partie division
@@ -111,13 +119,15 @@ int main (int argc, char **argv)
  for (i = 0 ; i < NB_FOIS; i++)
    {
      cd3 = div_complexe_double (cd1, cd2) ;
+    cd1.real = cd1.real + 1 ;
+    cd1.imaginary = cd1.imaginary + 1 ;
    }
 
  end = _rdtsc () ;
 
   printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
 
-  calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ;
+  calcul_flop ("calcul complexe ", NB_FOIS*13, end-start) ;
 
 
 

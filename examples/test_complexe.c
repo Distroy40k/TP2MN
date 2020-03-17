@@ -52,8 +52,11 @@ int main (int argc, char **argv)
 
   printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
 
-  calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ;
+  // L'appel d'une fonction (pas inline) a un coût bien plus important que celui du calcul de la fonctions
 
+  calcul_flop ("calcul complexe ", NB_FOIS*2, end-start) ;
+
+  // 
 
   // Partie multiplication
 
@@ -85,7 +88,7 @@ int main (int argc, char **argv)
 
   printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
 
-  calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ;
+  calcul_flop ("calcul complexe ", NB_FOIS*6, end-start) ;
 
 
   // Partie division
@@ -118,7 +121,7 @@ int main (int argc, char **argv)
 
   printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
 
-  calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ;
+  calcul_flop ("calcul complexe ", NB_FOIS*11, end-start) ;
 
 
 
