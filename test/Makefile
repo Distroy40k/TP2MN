@@ -1,4 +1,4 @@
-all: test_copy
+all: test_copy test_asum test_iamax test_iamin
 
 INC_DIR=../include
 
@@ -19,6 +19,24 @@ test_copy: test_copy.o flop.o $(LIB_DIR)/libmnblas.a
 test_copy.o: test_copy.c $(INC_DIR)/mnblas.h
 	gcc $(OPTIONS_COMPIL) -c test_copy.c
 
+test_asum: test_asum.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_asum test_asum.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_asum.o: test_asum.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_asum.c
+
+test_iamax: test_iamax.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_iamax test_iamax.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_iamax.o: test_iamax.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_iamax.c
+
+test_iamin: test_iamin.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_iamin test_iamin.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_iamin.o: test_iamin.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_iamin.c
+
 
 clean:
-	rm -f *.o test_copy *~
+	rm -f *.o test_copy test_asum *~
