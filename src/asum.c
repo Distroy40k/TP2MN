@@ -1,8 +1,5 @@
 #include "mnblas.h"
 
-double absd (double x);
-float absf (float x);
-
 
 float  mnblas_sasum(const int N, const float *X, const int incX) {
   register unsigned int i = 0 ;
@@ -52,15 +49,4 @@ double mnblas_dzasum(const int N, const void *X, const int incX) {
     }
 
   return res;
-}
-
-
-
-float absf (float x) {
-  if (x < 0) return -1 * x;
-  return x;
-}
-double absd (double x) {
-  if (x < 0) return -1 * x;
-  return x;
 }
