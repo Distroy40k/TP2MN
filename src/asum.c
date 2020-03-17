@@ -1,5 +1,5 @@
 #include "mnblas.h"
-
+#include "utils.h"
 
 float  mnblas_sasum(const int N, const float *X, const int incX) {
   register unsigned int i = 0 ;
