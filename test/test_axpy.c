@@ -116,7 +116,7 @@ int main(int argc, char **argv)
   printf("mnblas_saxpy %d : nombre de cycles: %Ld \n", i, end - start);
 
   nb_boucles = VECSIZE / max(incX, incY);
-  calcul_flop("mnblas_saxpy ", nb_boucles * 4, end - start);
+  calcul_flop("mnblas_saxpy ", nb_boucles * 2, end - start);
   printf("\n");
 
   printf("\n########### TEST #############\nFonction mnblas_daxpy\n\n");
@@ -148,7 +148,7 @@ int main(int argc, char **argv)
   printf("mnblas_daxpy %d : nombre de cycles: %Ld \n", i, end - start);
 
   nb_boucles = VECSIZE / max(incX, incY);
-  calcul_flop("mnblas_daxpy ", nb_boucles * 4, end - start);
+  calcul_flop("mnblas_daxpy ", nb_boucles * 2, end - start);
   printf("\n");
 
   printf("\n########### TEST #############\nFonction mnblas_caxpy\n\n");
@@ -182,7 +182,7 @@ int main(int argc, char **argv)
   printf("mnblas_caxpy %d : nombre de cycles: %Ld \n", i, end - start);
 
   nb_boucles = VECSIZE / max(incX, incY);
-  calcul_flop("mnblas_caxpy ", nb_boucles * 10, end - start);
+  calcul_flop("mnblas_caxpy ", nb_boucles * 4, end - start);
   printf("\n");
 
   printf("\n########### TEST #############\nFonction mnblas_zaxpy\n\n");
@@ -216,7 +216,7 @@ int main(int argc, char **argv)
   printf("mnblas_zaxpy %d : nombre de cycles: %Ld \n", i, end - start);
 
   nb_boucles = VECSIZE / max(incX, incY);
-  calcul_flop("mnblas_zaxpy ", nb_boucles * 10, end - start);
+  calcul_flop("mnblas_zaxpy ", nb_boucles * 4, end - start);
   printf("\n");
 
   free(fX);
