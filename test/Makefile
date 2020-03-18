@@ -1,4 +1,5 @@
-all: test_copy test_asum test_iamax test_iamin
+PROG=test_copy test_asum test_iamax test_iamin test_nrm2
+all: $(PROG)
 
 INC_DIR=../include
 
@@ -37,6 +38,12 @@ test_iamin: test_iamin.o flop.o $(LIB_DIR)/libmnblas.a
 test_iamin.o: test_iamin.c $(INC_DIR)/mnblas.h
 	gcc $(OPTIONS_COMPIL) -c test_iamin.c
 
+test_nrm2: test_nmr2.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_nmr2 test_nmr2.o flop.o $(OPTIONS_LINK_STATIC) -lm
+
+test_nmr2.o: test_nmr2.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_nmr2.c -lm
+
 
 clean:
-	rm -f *.o test_copy test_asum *~
+	rm -f *.o $(PROG) *~
