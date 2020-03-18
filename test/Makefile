@@ -1,4 +1,6 @@
+
 PROG=test_copy test_asum test_iamax test_iamin test_nrm2 test_swap test_axpy
+
 all: $(PROG)
 
 INC_DIR=../include
