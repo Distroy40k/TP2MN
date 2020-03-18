@@ -10,6 +10,6 @@ double absd (double x) {
 float mn_squaref(float x) {
   return x * x;
 }
-inline double mn_squared(double x) {
+double mn_squared(double x) {
   return x * x;
 }
