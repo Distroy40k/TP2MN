@@ -46,8 +46,7 @@ int main (int argc, char **argv)
  double d1p[SIZE_VECTOR];
  double d2p[SIZE_VECTOR];
 
- unsigned long long int sta
- printf("%f %f\n", f1[0], f2[0]);rt, end ;
+ unsigned long long int start, end ;
  int i;
 
  printf("\nTests des fonctions de swap\n\n");
@@ -110,8 +109,7 @@ int main (int argc, char **argv)
     mncblas_cswap(SIZE_VECTOR/2, f1, 1, f2, 1);
  }
  end = _rdtsc () ;
- printf ("Copy avec cswap
- printf("%f %f\n", f1[0], f2[0]);: %lld cycles \n", end-start) ;
+ printf ("Copy avec cswap: %lld cycles \n", end-start) ;
  calcul_octet ("mncblas_sswap ", NB_FOIS*6*SIZE_VECTOR, end-start) ;
  if (is_equal_float(f1,f2p) != 1) {
    printf("Erreur mncblas_cswap\n");
@@ -144,5 +142,4 @@ int main (int argc, char **argv)
    exit(1);
  }
 
-  exit (0) ;
 }
