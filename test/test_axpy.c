@@ -62,15 +62,17 @@ int max(int a, int b)
 int main(int argc, char **argv)
 {
 
-  float *fX = (float *)malloc(sizeof(float) * VECSIZE);
-  float *fY = (float *)malloc(sizeof(float) * VECSIZE);
-  double *dX = (double *)malloc(sizeof(double) * VECSIZE);
-  double *dY = (double *)malloc(sizeof(double) * VECSIZE);
-  double *dalpha = (double *)malloc(sizeof(double) * 1);
-  float *falpha = (float *)malloc(sizeof(float) * 1);
+  float fX[VECSIZE];
+  float fY[VECSIZE];
+  double dX[VECSIZE];
+  double dY[VECSIZE];
+  double dalpha[2];
+  float falpha[2];
 
   falpha[0] = 2.0;
+  falpha[1] = 2.0;
   dalpha[0] = 2.0;
+  dalpha[1] = 2.0;
   float alpha = 2.0;
 
   int incX = 1;
@@ -219,12 +221,6 @@ int main(int argc, char **argv)
   calcul_flop("mnblas_zaxpy ", nb_boucles * 4, end - start);
   printf("\n");
 
-  free(fX);
-  free(fY);
-  free(dX);
-  free(dY);
-  free(falpha);
-  free(dalpha);
 
   exit(0);
 }

@@ -1,4 +1,4 @@
-PROG=test_copy test_asum test_iamax test_iamin test_nrm2 test_swap test_axpy
+PROG=test_copy test_asum test_iamax test_iamin test_nrm2 test_swap test_axpy test_gemv
 all: $(PROG)
 
 INC_DIR=../include
@@ -50,12 +50,17 @@ test_axpy: test_axpy.o flop.o $(LIB_DIR)/libmnblas.a
 test_axpy.o: test_axpy.c $(INC_DIR)/mnblas.h
 	gcc -lm $(OPTIONS_COMPIL) -c test_axpy.c
 
-
 test_swap: test_swap.o flop.o $(LIB_DIR)/libmnblas.a
 	gcc -o test_swap test_swap.o flop.o $(OPTIONS_LINK_STATIC)
 
 test_swap.o: test_swap.c $(INC_DIR)/mnblas.h
 	gcc $(OPTIONS_COMPIL) -c test_swap.c
+
+test_gemv: test_gemv.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_gemv test_gemv.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_gemv.o: test_gemv.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_gemv.c
 
 test: $(PROG)
 	@echo;echo "*** TESTS ***";echo;\

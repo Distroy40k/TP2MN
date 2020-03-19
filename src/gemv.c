@@ -55,15 +55,20 @@ void mncblas_cgemv(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, const int M,
     float *alphap = (float *) alpha;
     float *betap = (float *) beta;
 
+    float tmp_y[2];
+    float tmp_y2;
     for (; i < M; i += incX) {
-      Yp[2 * i] *= (betap[0]/alphap[0]);
-      Yp[2 * i + 1] *= (betap[1]/alphap[1]);
+      tmp_y[0] =  Yp[2 * i] * betap[0] - Yp[2 * i + 1] * betap[1];
+      tmp_y[1] = Yp[2 * i] * betap[1] + Yp[2 * i + 1] * betap[0];
+      Yp[2 * i]=0;
+      Yp[2*i+1]=0;
       for (j = 0; j < N; j += incX) {
-        Yp[2 * i] += Ap[N * 2 * i + 2 * j] * Xp[2 * j];
-        Yp[2 * i + 1] += Ap[N * 2 * i + 2 * j + 1] * Xp[2 * j + 1];
+        Yp[2 * i] += Ap[N * 2 * i + 2 * j] * Xp[2 * j] - Ap[N * 2 * i + 2 * j + 1] * Xp[2 * j + 1];
+        Yp[2 * i + 1] += Ap[N * 2 * i + 2 * j] * Xp[2 * j + 1] + Ap[N * 2 * i + 2 * j+ 1] * Xp[2 * j];
       }
-      Yp[2 *i] *= alphap[0];
-      Yp[2 *i + 1] *= alphap[1];
+      tmp_y2 = Yp[2 *i];
+      Yp[2*i] = Yp[2*i] * alphap[0] - Yp[2*i+1] * alphap[1] + tmp_y[0];
+      Yp[2*i+1] = tmp_y2 * alphap[1] + Yp[2*i+1] * alphap[0] + tmp_y[1];
     }
   }
 
@@ -78,14 +83,19 @@ void mncblas_zgemv(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, const int M,
    double *alphap = (double *) alpha;
    double *betap = (double *) beta;
 
+   double tmp_y[2];
+   double tmp_y2;
    for (; i < M; i += incX) {
-     Yp[2 * i] *= (betap[0]/alphap[0]);
-     Yp[2 * i + 1] *= (betap[1]/alphap[1]);
+     tmp_y[0] =  Yp[2 * i] * betap[0] - Yp[2 * i + 1] * betap[1];
+     tmp_y[1] = Yp[2 * i] * betap[1] + Yp[2 * i + 1] * betap[0];
+     Yp[2 * i]=0;
+     Yp[2*i+1]=0;
      for (j = 0; j < N; j += incX) {
-       Yp[2 * i] += Ap[N * 2 * i + 2 * j] * Xp[2 * j];
-       Yp[2 * i + 1] += Ap[N * 2 * i + 2 * j + 1] * Xp[2 * j + 1];
+       Yp[2 * i] += Ap[N * 2 * i + 2 * j] * Xp[2 * j] - Ap[N * 2 * i + 2 * j + 1] * Xp[2 * j + 1];
+       Yp[2 * i + 1] += Ap[N * 2 * i + 2 * j] * Xp[2 * j + 1] + Ap[N * 2 * i + 2 * j+ 1] * Xp[2 * j];
      }
-     Yp[2 *i] *= alphap[0];
-     Yp[2 *i + 1] *= alphap[1];
+     tmp_y2 = Yp[2 *i];
+     Yp[2*i] = Yp[2*i] * alphap[0] - Yp[2*i+1] * alphap[1] + tmp_y[0];
+     Yp[2*i+1] = tmp_y2 * alphap[1] + Yp[2*i+1] * alphap[0] + tmp_y[1];
    }
  }
