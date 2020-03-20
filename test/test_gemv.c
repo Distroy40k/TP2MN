@@ -9,54 +9,78 @@
 
 void fvector_init(FILE *f, float *V, int n) {
   for (int i = 0; i < n; i++) {
-    fscanf(f, "%f", V + i);
+    if (fscanf(f, "%f", V + i)  != 1){
+      printf("Erreur scanf\n");
+    }
   }
 }
 
 void dvector_init(FILE *f, double *V, int n) {
   for (int i = 0; i < n; i++) {
-    fscanf(f, "%lf", V + i);
+    if (fscanf(f, "%lf", V + i)  != 1){
+      printf("Erreur scanf\n");
+    }
   }
 }
 
 void fmatrice_init(FILE* f, float *A, int n) {
   for (int i = 0; i < n * n; i++) {
-    fscanf(f, "%f", &(A[i]));
+    if (fscanf(f, "%f", &(A[i]))  != 1){
+      printf("Erreur scanf\n");
+    }
   }
 }
 
 void dmatrice_init(FILE* f, double *A, int n) {
   for (int i = 0; i < n * n; i++) {
-    fscanf(f, "%lf", A + i);
+    if (fscanf(f, "%lf", A + i)  != 1){
+      printf("Erreur scanf\n");
+    }
   }
 }
 
 void fvectorC_init(FILE *f, float *V, int n) {
   for (int i = 0; i < n; i++) {
-    fscanf(f, "%f", V + 2 * i);
-    fscanf(f, "%f", V + 2 * i + 1);
+    if (fscanf(f, "%f", V + 2 * i)  != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(f, "%f", V + 2 * i + 1)  != 1){
+      printf("Erreur scanf\n");
+    }
   }
 }
 
 void dvectorC_init(FILE *f, double *V, int n) {
   for (int i = 0; i < n ; i++) {
-    fscanf(f, "%lf", V + 2 * i);
-    fscanf(f, "%lf", V + 2 * i + 1);
+    if (fscanf(f, "%lf", V + 2 * i)  != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(f, "%lf", V + 2 * i + 1)  != 1){
+      printf("Erreur scanf\n");
+    }
   }
 }
 
 void fmatriceC_init(FILE* f, float *A, int n) {
 
   for (int i = 0; i < n * n ; i++) {
-    fscanf(f, "%f", &A[2 * i]);
-    fscanf(f, "%f", &A[2 * i + 1]);
+    if (fscanf(f, "%f", &A[2 * i])  != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(f, "%f", &A[2 * i + 1])  != 1){
+      printf("Erreur scanf\n");
+    }
   }
 }
 
 void dmatriceC_init(FILE* f, double *A, int n) {
   for (int i = 0; i < n * n; i++) {
-    fscanf(f, "%lf", A + 2 * i);
-    fscanf(f, "%lf", A + 2 * i + 1);
+    if (fscanf(f, "%lf", A + 2 * i)  != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(f, "%lf", A + 2 * i + 1)  != 1){
+      printf("Erreur scanf\n");
+    }
   }
 }
 
@@ -150,7 +174,12 @@ int main(int argc, char **argv) {
     printf("Mode :\n s single real\n d double real\n c single complex\n z double complex\n");
     printf("Renseigner la taille du vecteur et de la matrice au début du fichier\n");
     exit(1);
+  } else {
+    printf("######################## IMPORTANT ########################\n");
+    printf("Les fichiers passés en arguments sont supposés existants et valide\n");
+    printf("###########################################################\n");
   }
+
   int n;
   sscanf(argv[7], "%d", &n);
   char mode = argv[1][0];
@@ -206,26 +235,51 @@ int main(int argc, char **argv) {
     dvectorC_init(fopen(argv[6], "r"), dY, n);
   }
 
+
   if (mode == 's') {
-    fscanf(fopen(argv[2], "r"), "%f", falpha);
-    fscanf(fopen(argv[5], "r"), "%f", fbeta);
+    if (fscanf(fopen(argv[2], "r"), "%f", falpha) != 1) {
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(fopen(argv[5], "r"), "%f", fbeta)  != 1){
+      printf("Erreur scanf\n");
+    }
   } else  if (mode == 'd') {
-    fscanf(fopen(argv[2], "r"), "%lf", dalpha);
-    fscanf(fopen(argv[5], "r"), "%lf", dbeta);
+    if (fscanf(fopen(argv[2], "r"), "%lf", dalpha) != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(fopen(argv[5], "r"), "%lf", dbeta) != 1){
+      printf("Erreur scanf\n");
+    }
   } else if (mode == 'c') {
     FILE *Falpha = fopen(argv[2], "r");
     FILE *Fbeta = fopen(argv[5], "r");
-    fscanf(Falpha, "%f", falpha);
-    fscanf(Falpha, "%f", falpha + 1);
-    fscanf(Fbeta, "%f", fbeta);
-    fscanf(Fbeta, "%f", fbeta + 1);
+    if (fscanf(Falpha, "%f", falpha) != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(Falpha, "%f", falpha + 1) != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(Fbeta, "%f", fbeta) != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(Fbeta, "%f", fbeta + 1)  != 1){
+      printf("Erreur scanf\n");
+    }
   } else if (mode == 'z') {
     FILE *Falpha = fopen(argv[2], "r");
     FILE *Fbeta = fopen(argv[5], "r");
-    fscanf(Falpha, "%lf", dalpha);
-    fscanf(Falpha, "%lf", dalpha + 1);
-    fscanf(Fbeta, "%lf", dbeta);
-    fscanf(Fbeta, "%lf", dbeta + 1);
+    if (fscanf(Falpha, "%lf", dalpha) != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(Falpha, "%lf", dalpha + 1) != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(Fbeta, "%lf", dbeta) != 1){
+      printf("Erreur scanf\n");
+    }
+    if (fscanf(Fbeta, "%lf", dbeta + 1) != 1){
+      printf("Erreur scanf\n");
+    }
   }
 
   unsigned long long int start, end ;
@@ -268,7 +322,7 @@ int main(int argc, char **argv) {
         printf("%f\n", fY[2 *i]);
         printf("%f\n", fY[2 * i + 1]);
       }
-      calcul_flop ("Tests de mncblas_cgemv", n * n * NB_FOIS, end-start) ;
+      calcul_flop ("Tests de mncblas_cgemv", (n + 14)* n * 8 * NB_FOIS, end-start) ;
       break;
     case 'z':
       printf("\n##################\nTests de mncblas_zgemv\n##################\n");
@@ -281,7 +335,7 @@ int main(int argc, char **argv) {
         printf("%f\n", dY[2 * i]);
         printf("%f\n", dY[2 * i + 1]);
       }
-      calcul_flop ("Tests de mncblas_zgemv", n * n * NB_FOIS, end-start) ;
+      calcul_flop ("Tests de mncblas_zgemv", (n + 14) * n * 8 * NB_FOIS, end-start) ;
       break;
   }
 }
