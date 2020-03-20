@@ -38,11 +38,11 @@ test_iamin: test_iamin.o flop.o $(LIB_DIR)/libmnblas.a
 test_iamin.o: test_iamin.c $(INC_DIR)/mnblas.h
 	gcc $(OPTIONS_COMPIL) -c test_iamin.c
 
-test_nrm2: test_nmr2.o flop.o $(LIB_DIR)/libmnblas.a
-	gcc -o test_nmr2 test_nmr2.o flop.o $(OPTIONS_LINK_STATIC) -lm
+test_nrm2: test_nrm2.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_nrm2 test_nrm2.o flop.o $(OPTIONS_LINK_STATIC) -lm
 
-test_nmr2.o: test_nmr2.c $(INC_DIR)/mnblas.h
-	gcc -lm $(OPTIONS_COMPIL) -c test_nmr2.c
+test_nrm2.o: test_nrm2.c $(INC_DIR)/mnblas.h
+	gcc -lm $(OPTIONS_COMPIL) -c test_nrm2.c
 
 test_axpy: test_axpy.o flop.o $(LIB_DIR)/libmnblas.a
 	gcc -o test_axpy test_axpy.o flop.o $(OPTIONS_LINK_STATIC)

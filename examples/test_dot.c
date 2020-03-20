@@ -2,11 +2,10 @@
 #include <x86intrin.h>
 
 #include "mnblas.h"
-#include "complexe.h"
 
 #include "flop.h"
 
-#define VECSIZE    65536
+#define VECSIZE    256000
 
 #define NB_FOIS    10
 
@@ -53,6 +52,8 @@ int main (int argc, char **argv)
  float res ;
  double dres;
  int i ;
+ float tmp_fres[2];
+ double tmp_dres[2];
 
  init_flop () ;
 
@@ -69,8 +70,8 @@ int main (int argc, char **argv)
            }
      end = _rdtsc () ;
 
-     printf ("mncblas_sdot %d : res = %3.2f nombre de cycles: %Ld \n", i, res, end-start) ;
-     calcul_flop ("sdot ", 2 * VECSIZE, end-start) ;
+     printf ("mncblas_sdot : res = %3.2f nombre de cycles: %Ld \n",  res, end-start) ;
+     calcul_flop ("sdot ", 2 * VECSIZE * NB_FOIS, end-start) ;
 
 
    printf("\n########### TEST #############\nFonction mncblas_ddot\n\n");
@@ -85,72 +86,67 @@ int main (int argc, char **argv)
       }
      end = _rdtsc () ;
 
-     printf ("mncblas_ddot %d : res = %3.2f nombre de cycles: %Ld \n", i, dres, end-start) ;
-     calcul_flop ("ddot ", 2 * VECSIZE, end-start) ;
+     printf ("mncblas_ddot : res = %3.2f nombre de cycles: %Ld \n", dres, end-start) ;
+     calcul_flop ("ddot ", 2 * VECSIZE * NB_FOIS, end-start) ;
 
    printf("\n########### TEST #############\nFonction mncblas_cdotu_sub\n\n");
 
      vector_init (vec1, 1.0) ;
      vector_init (vec2, 2.0) ;
-     float tmp_res[2];
 
      start = _rdtsc () ;
      for (i = 0 ; i < NB_FOIS; i++)
       {
-        mncblas_cdotu_sub (VECSIZE/2, vec1, 1, vec2, 1, tmp_res) ;
+        mncblas_cdotu_sub (VECSIZE/2, vec1, 1, vec2, 1, tmp_fres) ;
       }
      end = _rdtsc () ;
 
-     printf ("mncblas_cdotu_sub %d : res = %3.2f + i %3.2f nombre de cycles: %Ld \n", i, tmp_res[0], tmp_res[1], end-start) ;
-     calcul_flop ("cdotu_sub", 4 * VECSIZE, end-start) ;
+     printf ("mncblas_cdotu_sub : res = %3.2f + i %3.2f nombre de cycles: %Ld \n", tmp_fres[0], tmp_fres[1], end-start) ;
+     calcul_flop ("cdotu_sub", 2 * VECSIZE * NB_FOIS, end-start) ;
 
    printf("\n########### TEST #############\nFonction mncblas_cdotc_sub\n\n");
 
       vector_init (vec1, 1.0) ;
       vector_init (vec2, 2.0) ;
-      float tmp_res[2];
-
       start = _rdtsc () ;
       for (i = 0 ; i < NB_FOIS; i++)
        {
-         mncblas_cdotc_sub (VECSIZE/2, vec1, 1, vec2, 1, tmp_res) ;
+         mncblas_cdotc_sub (VECSIZE/2, vec1, 1, vec2, 1, tmp_fres) ;
        }
       end = _rdtsc () ;
 
-      printf ("mncblas_cdotc_sub %d : res = %3.2f + i %3.2f nombre de cycles: %Ld \n", i, tmp_res[0], tmp_res[1], end-start) ;
-      calcul_flop ("cdotc_sub", 4 * VECSIZE, end-start) ;
+      printf ("mncblas_cdotc_sub : res = %3.2f + i %3.2f nombre de cycles: %Ld \n", tmp_fres[0], tmp_fres[1], end-start) ;
+      calcul_flop ("cdotc_sub", 2 * VECSIZE * NB_FOIS, end-start) ;
 
     printf("\n########### TEST #############\nFonction mncblas_zdotu_sub\n\n");
 
        dvector_init (dvec1, 1.0) ;
        dvector_init (dvec2, 2.0) ;
-       double tmp_res[2];
 
        start = _rdtsc () ;
        for (i = 0 ; i < NB_FOIS; i++)
         {
-          mncblas_zdotu_sub (VECSIZE/2, dvec1, 1, dvec2, 1, tmp_res) ;
+          mncblas_zdotu_sub (VECSIZE/2, dvec1, 1, dvec2, 1, tmp_dres) ;
         }
        end = _rdtsc () ;
 
-       printf ("mncblas_zdotu_sub %d : res = %3.2f + i %3.2f nombre de cycles: %Ld \n", i, tmp_res[0], tmp_res[1], end-start) ;
-       calcul_flop ("zdotu_sub", 4 * VECSIZE, end-start) ;
+       printf ("mncblas_zdotu_sub : res = %3.2f + i %3.2f nombre de cycles: %Ld \n", tmp_dres[0], tmp_dres[1], end-start) ;
+       calcul_flop ("zdotu_sub", 2 * VECSIZE * NB_FOIS, end-start) ;
 
 
      printf("\n########### TEST #############\nFonction mncblas_zdotc_sub\n\n");
 
         dvector_init (dvec1, 1.0) ;
         dvector_init (dvec2, 2.0) ;
-        double tmp_res[2];
 
         start = _rdtsc () ;
         for (i = 0 ; i < NB_FOIS; i++)
          {
-           mncblas_zdotc_sub (VECSIZE/2, dvec1, 1, dvec2, 1, tmp_res) ;
+           mncblas_zdotc_sub (VECSIZE/2, dvec1, 1, dvec2, 1, tmp_dres) ;
          }
         end = _rdtsc () ;
 
-        printf ("mncblas_zdotc_sub %d : res = %3.2f + i %3.2f nombre de cycles: %Ld \n", i, tmp_res[0], tmp_res[1], end-start) ;
-        calcul_flop ("zdotc_sub", 4 * VECSIZE, end-start) ;
+        printf ("mncblas_zdotc_sub : res = %3.2f + i %3.2f nombre de cycles: %Ld \n", tmp_dres[0], tmp_dres[1], end-start) ;
+        calcul_flop ("zdotc_sub",2 * VECSIZE * NB_FOIS, end-start) ;
 
 }

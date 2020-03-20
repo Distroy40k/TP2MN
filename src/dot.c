@@ -1,6 +1,6 @@
 #include "mnblas.h"
 #include <stdio.h>
-
+#include <math.h>
 /*
 float mncblas_sdot(const int N, const float *X, const int incX,
                  const float *Y, const int incY)

@@ -5,7 +5,6 @@
 
 #include "flop.h"
 
-#define NB_FOIS 45126
 
 void fvector_init(FILE *f, float *V, int n) {
   for (int i = 0; i < n; i++) {
@@ -297,7 +296,7 @@ int main(int argc, char **argv) {
       for (int i =0; i < n; i++) {
         printf("%f\n", fY[i]);
       }
-      calcul_flop ("Tests de mncblas_sgemv", n * n * NB_FOIS, end-start) ;
+      calcul_flop ("Tests de mncblas_sgemv", n * (n + 3), end-start) ;
       break;
     case 'd':
       printf("\n##################\nTests de mncblas_dgemv\n##################\n");
@@ -309,7 +308,7 @@ int main(int argc, char **argv) {
       for (int i =0; i < n; i++) {
         printf("%f\n", dY[i]);
       }
-      calcul_flop ("Tests de mncblas_dgemv", n * n * NB_FOIS, end-start) ;
+      calcul_flop ("Tests de mncblas_dgemv", n * (n +3), end-start) ;
       break;
     case 'c':
       printf("\n##################\nTests de mncblas_cgemv\n##################\n");
@@ -322,7 +321,7 @@ int main(int argc, char **argv) {
         printf("%f\n", fY[2 *i]);
         printf("%f\n", fY[2 * i + 1]);
       }
-      calcul_flop ("Tests de mncblas_cgemv", (n + 14)* n * 8 * NB_FOIS, end-start) ;
+      calcul_flop ("Tests de mncblas_cgemv", n * (14 + (n * 8)), end-start) ;
       break;
     case 'z':
       printf("\n##################\nTests de mncblas_zgemv\n##################\n");
@@ -335,7 +334,7 @@ int main(int argc, char **argv) {
         printf("%f\n", dY[2 * i]);
         printf("%f\n", dY[2 * i + 1]);
       }
-      calcul_flop ("Tests de mncblas_zgemv", (n + 14) * n * 8 * NB_FOIS, end-start) ;
+      calcul_flop ("Tests de mncblas_zgemv", n * (14 + (n * 8)), end-start) ;
       break;
   }
 }
