@@ -364,7 +364,7 @@ int main(int argc, char **argv) {
         mncblas_cgemm(MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, n, n, n, falpha, fA, 0, fB, 1, fbeta, fC, 1);
       }
       end = _rdtsc () ;
-      calcul_flop ("Tests de mncblas_cgemm", n * n * ((n * 8) + 6) * NB_FOIS, end-start) ;
+      calcul_flop ("Tests de mncblas_cgemm", n * n * ((n * 8) + 14) * NB_FOIS, end-start) ;
       break;
 
     case 'z':
@@ -384,7 +384,11 @@ int main(int argc, char **argv) {
         mncblas_zgemm(MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, n, n, n, dalpha, dA, 0, dB, 1, dbeta, dC, 1);
       }
       end = _rdtsc () ;
-      calcul_flop ("Tests de mncblas_zgemm",  n * n * ((n * 8) + 6) * NB_FOIS , end-start) ;
+      calcul_flop ("Tests de mncblas_zgemm",  n * n * ((n * 8) + 14) * NB_FOIS , end-start) ;
       break;
+
+    default:
+      printf("Mode non reconnu\n");
+      exit(1);
   }
 }

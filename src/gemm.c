@@ -37,16 +37,22 @@ const void *A, const int lda, const void *B, const int ldb, const void *beta, vo
                     float * B_tab = (float *)B;
                     float * C_tab = (float *)C;
 
+                    float tmp_C1[2];
+                    float tmp_C2;
+
                     for (int k = 0; k<M ; k++){
-                        for (int i = 0; i<M ; i++){
-                            C_tab [2*i + 2*k*M] *= (beta_tab [0]/alpha_tab [0]);
-                            C_tab [2*i + 1 + 2*k*M] *= (beta_tab [0]/alpha_tab [0]);
+                        for (int i = 0; i<M ; i++){ 
+                            tmp_C1[0] = beta_tab[0] * C_tab[2*i + 2*k*M] - (beta_tab[1] * C_tab[2*i + 1 + 2*k*M]);
+                            tmp_C1[1] = beta_tab[1] * C_tab[2*i + 2*k*M] + (beta_tab[0] * C_tab[2*i + 1 + 2*k*M]);
+                            C_tab [2*i + 2*k*M] = 0;
+                            C_tab [2*i + 1 + 2*k*M] = 0; 
                             for (int j = 0; j<N ; j++){
                                 C_tab [2*i + 2*k*M] += (A_tab [2*j + 2*k*M] * B_tab [2*i + 2*j*M]) - (A_tab [2*j + 2*k*M + 1] * B_tab [2*i + 2*j*M + 1]); 
                                 C_tab [2*i + 2*k*M + 1] += (A_tab [2*j + 2*k*M ] * B_tab [2*i + 2*j*M + 1]) + (A_tab [2*j + 2*k*M + 1 ] * B_tab [2*i + 2*j*M]); 
                             }
-                            C_tab [2*i + 2*k*M] *= alpha_tab [0];
-                            C_tab [2*i + 2*k*M + 1] *= alpha_tab [0];
+                            tmp_C2 = C_tab [2*i + 2*k*M];
+                            C_tab [2*i + 2*k*M] = alpha_tab [0] * C_tab [2*i + 2*k*M] - alpha_tab [1] * C_tab [2*i + 1 + 2*k*M] + tmp_C1[0];
+                            C_tab [2*i + 2*k*M + 1] = alpha_tab [1] * tmp_C2 + alpha_tab[0] * C_tab [2*i + 1 + 2*k*M ] + tmp_C1[1];
                         }
                     }
                  }
@@ -60,16 +66,22 @@ const void *A, const int lda, const void *B, const int ldb, const void *beta, vo
                     double * B_tab = (double *)B;
                     double * C_tab = (double *)C;
 
+                    double tmp_C1[2];
+                    double tmp_C2;
+
                     for (int k = 0; k<M ; k++){
-                        for (int i = 0; i<M ; i++){
-                            C_tab [2*i + 2*k*M] *= (beta_tab [0]/alpha_tab [0]);
-                            C_tab [2*i + 1 + 2*k*M] *= (beta_tab [0]/alpha_tab [0]);
+                        for (int i = 0; i<M ; i++){ 
+                            tmp_C1[0] = beta_tab[0] * C_tab[2*i + 2*k*M] - (beta_tab[1] * C_tab[2*i + 1 + 2*k*M]);
+                            tmp_C1[1] = beta_tab[1] * C_tab[2*i + 2*k*M] + (beta_tab[0] * C_tab[2*i + 1 + 2*k*M]);
+                            C_tab [2*i + 2*k*M] = 0;
+                            C_tab [2*i + 1 + 2*k*M] = 0; 
                             for (int j = 0; j<N ; j++){
                                 C_tab [2*i + 2*k*M] += (A_tab [2*j + 2*k*M] * B_tab [2*i + 2*j*M]) - (A_tab [2*j + 2*k*M + 1] * B_tab [2*i + 2*j*M + 1]); 
                                 C_tab [2*i + 2*k*M + 1] += (A_tab [2*j + 2*k*M ] * B_tab [2*i + 2*j*M + 1]) + (A_tab [2*j + 2*k*M + 1 ] * B_tab [2*i + 2*j*M]); 
                             }
-                            C_tab [2*i + 2*k*M] *= alpha_tab [0];
-                            C_tab [2*i + 2*k*M + 1] *= alpha_tab [0];
+                            tmp_C2 = C_tab [2*i + 2*k*M];
+                            C_tab [2*i + 2*k*M] = alpha_tab [0] * C_tab [2*i + 2*k*M] - alpha_tab [1] * C_tab [2*i + 1 + 2*k*M] + tmp_C1[0];
+                            C_tab [2*i + 2*k*M + 1] = alpha_tab [1] * tmp_C2 + alpha_tab[0] * C_tab [2*i + 1 + 2*k*M ] + tmp_C1[1];
                         }
                     }
                  }
