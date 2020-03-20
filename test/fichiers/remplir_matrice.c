@@ -27,6 +27,10 @@ int main()  {
   remplir_matrice(2, 0, f);
   f = fopen("m_2_2_1.txt", "w");
   remplir_matrice(2, 1, f);
+  f = fopen("m_5_5_0.txt", "w");
+  remplir_matrice(5, 0, f);
+  f = fopen("m_5_5_1.txt", "w");
+  remplir_matrice(5, 1, f);
   f = fopen("m_256_256_1.txt", "w");
   remplir_matrice(256, 1, f);
   f = fopen("m_256_256_0.txt", "w");
@@ -41,6 +45,16 @@ int main()  {
   remplir_matriceC(2, 1, f);
   f = fopen("mC_2_2_0.txt", "w");
   remplir_matriceC(2, 0, f);
+  f = fopen("mC_5_5_1.txt", "w");
+  remplir_matriceC(5, 1, f);
+  f = fopen("mC_5_5_0.txt", "w");
+  remplir_matriceC(5, 0, f);
+  f = fopen("mC_128_128_1.txt", "w");
+  remplir_matriceC(128, 1, f);
+  f = fopen("mC_128_128_0.txt", "w");
+  remplir_matriceC(128, 0, f);
+  
+
   f = fopen("xC_2_0.txt", "w");
   remplir_vecteurC(2,0,f);
   f = fopen("xC_2_1.txt", "w");
