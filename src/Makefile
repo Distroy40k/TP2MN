@@ -10,16 +10,16 @@ OPTIM=-O2 -fopenmp
 OPTIONS=-O2 -Wall -fPIC $(OPTIM) -I$(INC_DIR)
 # Bibliothèque statique
 
-libmnblas.a: copy.o swap.o dot.o complexe.o asum.o iamax.o utils.o iamin.o axpy.o nrm2.o gemv.o
+libmnblas.a: copy.o swap.o dot.o complexe.o asum.o iamax.o utils.o iamin.o axpy.o nrm2.o gemv.o gemm.o
 	rm -f libmnblas.a $(LIB_DIR)/libmnblas.a
-	ar -r libmnblas.a copy.o swap.o dot.o complexe.o asum.o iamax.o utils.o iamin.o axpy.o nrm2.o gemv.o
+	ar -r libmnblas.a copy.o swap.o dot.o complexe.o asum.o iamax.o utils.o iamin.o axpy.o nrm2.o gemv.o gemm.o
 	cp libmnblas.a $(LIB_DIR)
 
 # Bibliothèque dynamique
 
-libmnblasdyn.so:copy.o swap.o dot.o complexe.o asum.o iamax.o iamin.o axpy.o gemv.o
+libmnblasdyn.so:copy.o swap.o dot.o complexe.o asum.o iamax.o iamin.o axpy.o gemv.o gemm.o
 	rm -f libmnblasdyn.so $(LIB_DIR)/libmnblasdyn.so
-	gcc -shared -o libmnblasdyn.so copy.o swap.o dot.o complexe.o asum.o iamax.o iamin.o axpy.o gemv.o
+	gcc -shared -o libmnblasdyn.so copy.o swap.o dot.o complexe.o asum.o iamax.o iamin.o axpy.o gemv.o gemm.o
 	cp libmnblasdyn.so $(LIB_DIR)
 
 complexe.o: $(INC_DIR)/complexe.h complexe.c
@@ -53,6 +53,9 @@ nrm2.o : nrm2.c $(INC_DIR)/mnblas.h $(INC_DIR)/utils.h -lm
 
 gemv.o : gemv.c $(INC_DIR)/mnblas.h
 	gcc  $(OPTIONS) -c gemv.c
+
+gemm.o : gemm.c $(INC_DIR)/mnblas.h
+	gcc  $(OPTIONS) -c gemm.c
 
 utils.o : utils.c
 	gcc $(OPTIONS) -c utils.c
