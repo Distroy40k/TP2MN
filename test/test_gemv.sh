@@ -102,42 +102,49 @@ read -p "Press enter to continue"
 echo
 echo
 echo "Calcul: V(1) * M(1) * V(0) + V(1) * V(1); 2; c"
-echo "Res attendu :  a calc"
+echo "Res attendu :  0 2"
+echo "               0 2"
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv c fichiers/Calpha_1.txt fichiers/mC_2_2_1.txt fichiers/xC_2_0.txt fichiers/Cbeta_1.txt fichiers/yC_2_1.txt 2
 echo
 echo
 echo "Calcul: V(1) * M(1) * V(1) + V(1) * V(1); 2; c"
-echo "Res attendu :  a calc"
+echo "Res attendu :  -4 6"
+echo "               -4 6"
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv c fichiers/Calpha_1.txt fichiers/mC_2_2_1.txt fichiers/xC_2_1.txt fichiers/Cbeta_1.txt fichiers/yC_2_1.txt 2
 echo
 echo
 echo "Calcul: V(1) * M(1) * V(1) + V(0) * V(1); 2; c"
-echo "Res attendu :  a calc"
+echo "Res attendu :  -4 4"
+echo "               -4 4"
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv c fichiers/Calpha_1.txt fichiers/mC_2_2_1.txt fichiers/xC_2_1.txt fichiers/Cbeta_0.txt fichiers/yC_2_1.txt 2
 echo
 echo
 echo "Calcul: V(2) * M(1) * V(1) + V(0) * V(1); 2; c"
-echo "Res attendu :  a calc"
+echo "Res attendu :  -8 8"
+echo "               -8 8"
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv c fichiers/Calpha_2.txt fichiers/mC_2_2_1.txt fichiers/xC_2_1.txt fichiers/Cbeta_0.txt fichiers/yC_2_1.txt 2
 echo
 echo
 echo "Calcul: V(1) * M(1) * V(0) + V(0) * V(1); 2; c"
-echo "Res attendu :  a calc"
+echo "Res attendu :  0 0"
+echo "               0 0"
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv c fichiers/Calpha_1.txt fichiers/mC_2_2_1.txt fichiers/xC_2_0.txt fichiers/Cbeta_0.txt fichiers/yC_2_1.txt 2
 echo
 echo
 echo "Calcul: V(2) * M(1) * V(1) + V(0) * V(1); 128; c"
-echo "Res attendu :  heu"
+echo "Res attendu :  -512 512"
+echo "               512 512"
+echo "               ... ..."
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv c fichiers/Calpha_2.txt fichiers/mC_128_128_1.txt fichiers/xC_128_1.txt fichiers/Cbeta_0.txt fichiers/yC_128_1.txt 128
@@ -150,42 +157,49 @@ read -p "Press enter to continue"
 echo
 echo
 echo "Calcul: V(1) * M(1) * V(0) + V(1) * V(1); 2; z"
-echo "Res attendu :  a calc"
+echo "Res attendu :  0 2"
+echo "               0 2"
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv z fichiers/Calpha_1.txt fichiers/mC_2_2_1.txt fichiers/xC_2_0.txt fichiers/Cbeta_1.txt fichiers/yC_2_1.txt 2
 echo
 echo
-echo "Calcul: V(1) * M(1) * V(0) + V(1) * V(1); 2; z"
-echo "Res attendu :  a calc"
+echo "Calcul: V(1) * M(1) * V(1) + V(1) * V(1); 2; z"
+echo "Res attendu :  -4 6"
+echo "               -4 6"
 echo "######################"
 read -p "Press enter to continue"
-./test_gemv z fichiers/Calpha_1.txt fichiers/mC_2_2_1.txt fichiers/xC_2_0.txt fichiers/Cbeta_1.txt fichiers/yC_2_1.txt 2
+./test_gemv z fichiers/Calpha_1.txt fichiers/mC_2_2_1.txt fichiers/xC_2_1.txt fichiers/Cbeta_1.txt fichiers/yC_2_1.txt 2
 echo
 echo
 echo "Calcul: V(1) * M(1) * V(1) + V(0) * V(1); 2; z"
-echo "Res attendu :  a calc"
+echo "Res attendu :  -4 4"
+echo "               -4 4"
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv z fichiers/Calpha_1.txt fichiers/mC_2_2_1.txt fichiers/xC_2_1.txt fichiers/Cbeta_0.txt fichiers/yC_2_1.txt 2
 echo
 echo
 echo "Calcul: V(2) * M(1) * V(1) + V(0) * V(1); 2; z"
-echo "Res attendu :  a calc"
+echo "Res attendu :  -8 8"
+echo "               -8 8"
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv z fichiers/Calpha_2.txt fichiers/mC_2_2_1.txt fichiers/xC_2_1.txt fichiers/Cbeta_0.txt fichiers/yC_2_1.txt 2
 echo
 echo
 echo "Calcul: V(1) * M(1) * V(0) + V(0) * V(1); 2; z"
-echo "Res attendu :  a calc"
+echo "Res attendu :  0 0"
+echo "               0 0"
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv z fichiers/Calpha_1.txt fichiers/mC_2_2_1.txt fichiers/xC_2_0.txt fichiers/Cbeta_0.txt fichiers/yC_2_1.txt 2
 echo
 echo
 echo "Calcul: V(2) * M(1) * V(1) + V(0) * V(1); 128; z"
-echo "Res attendu :  a calc"
+echo "Res attendu :  -512 512"
+echo "               512 512"
+echo "               ... ..."
 echo "######################"
 read -p "Press enter to continue"
 ./test_gemv z fichiers/Calpha_2.txt fichiers/mC_128_128_1.txt fichiers/xC_128_1.txt fichiers/Cbeta_0.txt fichiers/yC_128_1.txt 128
