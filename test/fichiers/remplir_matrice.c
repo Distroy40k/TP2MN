@@ -53,16 +53,20 @@ int main()  {
   remplir_matriceC(128, 1, f);
   f = fopen("mC_128_128_0.txt", "w");
   remplir_matriceC(128, 0, f);
-  
+
 
   f = fopen("xC_2_0.txt", "w");
   remplir_vecteurC(2,0,f);
   f = fopen("xC_2_1.txt", "w");
   remplir_vecteurC(2,1,f);
+  f = fopen("xC_128_1.txt", "w");
+  remplir_vecteurC(128,1,f);
   f = fopen("yC_2_0.txt", "w");
   remplir_vecteurC(2,0,f);
   f = fopen("yC_2_1.txt", "w");
   remplir_vecteurC(2,1,f);
+  f = fopen("yC_128_1.txt", "w");
+  remplir_vecteurC(128,1,f);
 
   f = fopen("x_2_0.txt", "w");
   remplir_vecteur(2,0,f);

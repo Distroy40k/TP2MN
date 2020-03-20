@@ -84,13 +84,15 @@ void dmatriceC_init(FILE* f, double *A, int n) {
 }
 
 void afficher_scalc(float alpha, float *A, float * X, float beta, float *Y, int n) {
-  printf("n : %d\n", n);
   int i = 0;
+  int j = 0;
   printf("Matrice A\n");
-
-  for (i = 0; i < n * 2; i ++) {
-      printf("%f\n", A[i]);
+  for (j = 0; j < n ; j++){
+    for (i = 0; i < n ; i ++) {
+      printf("%f ", A[i + j*n]);
     }
+    printf("\n");
+  }
   printf("\nX:\n");
   for (i =0; i < n; i++) {
     printf("%f\n", X[i]);
@@ -104,11 +106,15 @@ void afficher_scalc(float alpha, float *A, float * X, float beta, float *Y, int 
 }
 
 void afficher_ccalc(float *alpha, float *A, float * X, float *beta, float *Y, int n) {
-  printf("Matrice A\n");
   int i = 0;
-  for (i = 0; i < n * n; i ++) {
-    printf("%f\n", A[2 * i]);
-    printf("%f\n", A[2 * i + 1]);
+  int j = 0;
+  printf("Matrice A\n");
+  for (j = 0; j < n ; j++){
+    for (i = 0; i < n ; i ++) {
+      printf("%f ", A[2 * i + j*n]);
+      printf("%f ", A[2 * i + 1 + j*n]);
+    }
+    printf("\n");
   }
   printf("\nX:\n");
   for (i =0; i < n; i++) {
@@ -127,10 +133,14 @@ void afficher_ccalc(float *alpha, float *A, float * X, float *beta, float *Y, in
 
 
 void afficher_dcalc(double alpha, double *A, double * X, double beta, double *Y, int n) {
-  printf("Matrice A\n");
   int i = 0;
-  for (i = 0; i < n * n; i ++) {
-      printf("%f\n", A[i]);
+  int j = 0;
+  printf("Matrice A\n");
+  for (j = 0; j < n ; j++){
+    for (i = 0; i < n ; i ++) {
+      printf("%f ", A[i + j*n]);
+    }
+    printf("\n");
   }
   printf("\nX:\n");
   for (i =0; i < n; i++) {
@@ -145,11 +155,15 @@ void afficher_dcalc(double alpha, double *A, double * X, double beta, double *Y,
 }
 
 void afficher_zcalc(double *alpha, double *A, double * X, double *beta, double *Y, int n) {
-  printf("Matrice A\n");
   int i = 0;
-  for (i = 0; i < n * n; i ++) {
-    printf("%f\n", A[2 * i]);
-    printf("%f\n", A[2 * i + 1]);
+  int j = 0;
+  printf("Matrice A\n");
+  for (j = 0; j < n ; j++){
+    for (i = 0; i < n ; i ++) {
+      printf("%f ", A[2 * i + j*n]);
+      printf("%f ", A[2 * i + 1 + j*n]);
+    }
+    printf("\n");
   }
   printf("\nX:\n");
   for (i =0; i < n; i++) {
