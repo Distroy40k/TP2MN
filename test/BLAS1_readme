@@ -1,0 +1,40 @@
+###############################
+## TEST DES FONCTIONS BLAS1  ##
+###############################
+
+Les tests des fonctions BLAS 1 sont dans le dossier /test, sauf ceux pour dot qui se trouvent dans /examples.
+
+COMPILATION :
+Utilisez la commande make pour compiler les tests.
+
+UTILISATION:
+  ./test_function precision
+
+  Choix pour précision : s, d, c, z
+
+
+DESCRIPTION:
+Nous n'avons pas eut le temps de faire des tests très poussés sur BLAS 1, contrairement à BLAS 2 et 3.
+Il est décrit au lancement du script le test réalisé. Nous n'avons pas eut le temps de creer des tests qui prennent en argument des données (vecteurs, scalaires...) pour BLAS 1.
+Nous vous invitons donc à lancer les différents tests pour voir. Comme ces fonctions sont "basics", de simples tests suffisent pour verifier si elles fonctionnent.
+
+
+  - copy:
+      on crée un vecteur dont les coordonnées sont égales à une même valeur et on vérifie simplement si la copie s'est bien passé.
+  - swap:
+      on cré deux vecteurs, l'un dont les coordonnées valent 1 et l'autre 2. On vérifie ensuite que le swap (échange) c'est bien passé.
+  - asum:
+      on initialise un vecteur de taille fixe N avec pour chaque coordonées une même valeur x. On vérifie ensuite que la somme est correctement calculée, en vérifiant que ret = N * x
+  - nrm2:
+      on initialise un vecteur de taille fixe N avec pour chaque coordonées une même valeur x. On vérfie ensuite que la norme est correctement:
+      ret = sqrt(x² * N)
+  - iamin:
+      on génère un vecteur avec pour chaque coordonnées la valeur 2, et on set aléatoirement une coordonnée à 1, et on vérifie si
+      la valeur de l'indice retournée par la fonction est correcte.
+  - iamax:
+      on génère un vecteur avec pour chaque coordonnées la valeur 1, et on set aléatoirement une coordonnée à 2, et on vérifie si
+      la valeur de l'indice retournée par la fonction est correcte.
+
+
+Dans tout les cas, nos tests sont explicités par une petite ligne d'introduction au lancement du test.
+C'est les même test qui sont réalisés pour chacun des modes.

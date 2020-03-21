@@ -42,7 +42,7 @@ int main (int argc, char **argv)
  unsigned long long int start, end ;
  int i;
  printf("\nTests des fonctions de copy\n\n");
- printf("####################\nPour tester ces fonctions, on cré un vecteur de taille %d, avec des élements de 0 à %d, et on le copie dans un autre vecteur\nOn verifie ensuite que la copie c'est ben passées\n", SIZE_VECTOR, SIZE_VECTOR);
+ printf("####################\nPour tester ces fonctions, on cré un vecteur de taille %d, avec des élements de 0 à %d, et on le copie dans un autre vecteur\nOn verifie ensuite que la copie c'est ben passées####################\n\n", SIZE_VECTOR, SIZE_VECTOR);
 
 switch (mode) {
   case 's':

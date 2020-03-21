@@ -67,7 +67,7 @@ int main (int argc, char **argv)
  init_flop () ;
 
  printf("\nTests des fonctions de swap\n\n");
- printf("####################\nPour tester ces fonctions, on cré deux vecteur de taille %d\nL'un contient que des 1, l'autre que des 2\n On verifie ensuite que le swap c'est ben passé\n", SIZE_VECTOR);
+ printf("####################\nPour tester ces fonctions, on cré deux vecteurs de taille %d\nL'un contient que des 1, l'autre que des 2\n On verifie ensuite que le swap c'est ben passé\n####################\n", SIZE_VECTOR);
 
  switch (mode) {
    case 's':

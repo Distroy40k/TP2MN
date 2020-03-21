@@ -1,0 +1,34 @@
+###############################
+## TEST DES FONCTIONS BLAS2  ##
+###############################
+
+Pour BLAS 2, nous avons amélioré les tests.
+
+COMPILATION :
+
+  Utilisez la commande make pour compiler les tests.
+
+UTILISATION:
+  ./test_gemv mode alpha A X beta Y N
+
+  Choix pour précision : s, d, c, z
+  alpha et beta sont des scalaires, complexes ou réel
+  X et Y sont des vecteur de N éléments
+  A est une matrice de taille N * N
+  Tout les paramètres sauf le mode et N douvent être des fichiers existants et valides
+
+  Le dossier /tests/fichiers contients les fichiers de test
+
+  Pour simplifier les tests, nous avons créé un script bash, test_gemv.sh qui exécute différents test en fonction des fichiers passés en arguments.
+
+
+
+
+DESCRIPTION:
+  Pour les tests de BLAS2, nous avons choisis de permettre a l'utilisateur de rentrer ces propres valeurs de test, et vérifier le résultat (voir les fichiers test dans le dossier fichiers).
+  Vous pourez tester BLAS 2 avec vos propres vecteurs, matrices et scalaires. Attention cependant à passer des arguments valides, car nous ne faisons aucune vérifications sur les fichiers.
+
+  Le script test_gemv.sh explique le test réalisé et le résultat attendu, attend que l'utilisateur appuy sur une touche et fait le calcul, en affichant les paramètres et le résultats;
+  avant de passer au test suivant. Tout les modes sont testés, avec différentes valeurs pour les paramètres (généralement 1 ou 0 car facile a vérifier).
+
+  La encore, tout est affiché à l'écran, nous vous invitons donc à éxecuter le script pour tester
