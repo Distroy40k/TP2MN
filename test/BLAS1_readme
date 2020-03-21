@@ -34,6 +34,8 @@ Nous vous invitons donc à lancer les différents tests pour voir. Comme ces fon
   - iamax:
       on génère un vecteur avec pour chaque coordonnées la valeur 1, et on set aléatoirement une coordonnée à 2, et on vérifie si
       la valeur de l'indice retournée par la fonction est correcte.
+  - dot:
+      dot se trouve dans le dossier examples. Il existe deux test identiques, mais l'un utilisant un librairie statique et l'autre dynamique.
 
 
 Dans tout les cas, nos tests sont explicités par une petite ligne d'introduction au lancement du test.

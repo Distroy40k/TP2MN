@@ -114,18 +114,14 @@ void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
 }
 
 void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
-                       const void *Y, const int incY, void *dotc)
-{
+                       const void *Y, const int incY, void *dotc){
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-
   *((double *) dotc) = 0;
   *(((double *) dotc) + 1) = 0;
-    double * Xp = (double *) X;
-    double * Yp = (double *) Y;
-
+  double * Xp = (double *) X;
+  double * Yp = (double *) Y;
   for (i = 0 ; i < N ; i += incX) {
-
     *((double *) dotc) += (Xp [2 * i] * Yp [2 * j]) - (Xp [2 * i + 1] * Yp [2 * j + 1]);
     *(((double *) dotc) + 1) += (-1 * Xp [2 * i + 1] * Yp [2 * j + 1]) + (-1 * Xp [2 * i + 1] * Yp [2 * j]);
     j+= incY;
