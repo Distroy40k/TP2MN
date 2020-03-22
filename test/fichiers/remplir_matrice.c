@@ -23,7 +23,10 @@ void remplir_vecteurC (int n,float x,FILE *f) {
 }
 
 int main()  {
+
   FILE *f = fopen("m_2_2_0.txt", "w");
+
+
   remplir_matrice(2, 0, f);
   f = fopen("m_2_2_1.txt", "w");
   remplir_matrice(2, 1, f);
@@ -39,6 +42,10 @@ int main()  {
   remplir_matrice(256, 1, f);
   f = fopen("m_128_128_0.txt", "w");
   remplir_matrice(256, 0, f);
+  f = fopen("m_500_500_1.txt", "w");
+  remplir_matrice(500, 1, f);
+  f = fopen("m_750_750_1.txt", "w");
+  remplir_matrice(750, 1, f);
 
 
   f = fopen("mC_2_2_1.txt", "w");
@@ -80,6 +87,11 @@ int main()  {
   remplir_vecteur(128,0,f);
   f = fopen("x_128_1.txt", "w");
   remplir_vecteur(128,1,f);
+  f = fopen("x_500_1.txt", "w");
+  remplir_vecteur(500,1,f);
+
+  f = fopen("x_750_1.txt", "w");
+  remplir_vecteur(750,1,f);
 
   f = fopen("y_2_0.txt", "w");
   remplir_vecteur(2,0,f);
@@ -93,4 +105,11 @@ int main()  {
   remplir_vecteur(128,0,f);
   f = fopen("y_128_1.txt", "w");
   remplir_vecteur(128,1,f);
+  f = fopen("y_500_1.txt", "w");
+  remplir_vecteur(500,1,f);
+  f = fopen("y_750_1.txt", "w");
+  remplir_vecteur(750,1,f);
+
+  f = fopen("Ralpha_1.txt", "w");
+  fprintf(f, "%f", 1);
 }
