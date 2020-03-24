@@ -53,6 +53,7 @@ int main(int argc, char **argv)
   cd2 = (complexe_double_t){25.0, 32.0};
 
 
+  printf("\n");
   printf("Double\n");
   printf("\n");
 
@@ -102,6 +103,7 @@ int main(int argc, char **argv)
   cd1 = (complexe_double_t){10.0, 7.0};
   cd2 = (complexe_double_t){25.0, 32.0};
 
+  printf("\n");
   printf("Double\n");
   printf("\n");
 
@@ -151,6 +153,7 @@ int main(int argc, char **argv)
   cd1 = (complexe_double_t){10.0, 7.0};
   cd2 = (complexe_double_t){25.0, 32.0};
 
+  printf("\n");
   printf("Double\n");
   printf("\n");
 
