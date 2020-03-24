@@ -6,8 +6,8 @@
 #include "flop.h"
 
 #define NB_TEST 5
-#define NB_FOIS 41943
-#define SIZE_VECTOR 426
+#define NB_FOIS 410
+#define SIZE_VECTOR 600000
 
 void init_vecteurf(float* v, float x) {
   for (int i = 0; i < SIZE_VECTOR; i++) {
@@ -56,7 +56,7 @@ int main (int argc, char **argv)
         }
         end = _rdtsc () ;
         printf ("La somme d'un vecteur de float simple précision: %lld cycles \n", end-start) ;
-        calcul_flop ("mnblas_sasum ", NB_FOIS, end-start) ;
+        calcul_flop ("mnblas_sasum ", NB_FOIS * SIZE_VECTOR, end-start) ;
         if (resf != test * SIZE_VECTOR) {
           printf("Erreur copie mnblas_sasum\n");
           exit(1);
@@ -74,7 +74,7 @@ int main (int argc, char **argv)
         }
         end = _rdtsc () ;
         printf ("La somme d'un vecteur de float double précision: %lld cycles \n", end-start) ;
-        calcul_flop ("mnblas_dasum ", NB_FOIS, end-start) ;
+        calcul_flop ("mnblas_dasum ", NB_FOIS * SIZE_VECTOR, end-start) ;
         if (resd != test * SIZE_VECTOR) {
           printf("Erreur copie mnblas_dasum\n");
           exit(1);
@@ -92,12 +92,13 @@ int main (int argc, char **argv)
         }
         end = _rdtsc () ;
         printf ("La somme d'un vecteur de float simple précision: %lld cycles \n", end-start) ;
-        calcul_flop ("mnblas_scasum ", NB_FOIS, end-start) ;
+        calcul_flop ("mnblas_scasum ", NB_FOIS * SIZE_VECTOR, end-start) ;
         if (resf != test * SIZE_VECTOR) {
          printf("Erreur copie mnblas_scasum\n");
          exit(1);
         }
       }
+      break;
     case 'z':
       printf("\n##################\nTests de mnblas_dzasum\n##################\n");
         for (test = 0; test < NB_TEST; test ++) {
@@ -109,7 +110,7 @@ int main (int argc, char **argv)
         }
         end = _rdtsc () ;
         printf ("La somme d'un vecteur de double double précision: %lld cycles \n", end-start) ;
-        calcul_flop ("mnblas_dzasum ", NB_FOIS, end-start) ;
+        calcul_flop ("mnblas_dzasum ", NB_FOIS * SIZE_VECTOR, end-start) ;
         if (resd != test * SIZE_VECTOR) {
          printf("Erreur copie mnblas_dzasum\n");
          exit(1);

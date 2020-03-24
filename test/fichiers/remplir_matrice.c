@@ -109,7 +109,4 @@ int main()  {
   remplir_vecteur(500,1,f);
   f = fopen("y_750_1.txt", "w");
   remplir_vecteur(750,1,f);
-
-  f = fopen("Ralpha_1.txt", "w");
-  fprintf(f, "%f", 1);
 }
