@@ -6,124 +6,172 @@
 
 #include "flop.h"
 
-#define    NB_FOIS        4194304
+#define NB_FOIS 4194304
 
-int main (int argc, char **argv)
+int main(int argc, char **argv)
 {
 
- complexe_float_t c1= {1.0, 2.0} ;
- complexe_float_t c2= {3.0, 6.0} ;
- complexe_float_t c3 ;
+  complexe_float_t c1 = {10.0, 7.0};
+  complexe_float_t c2 = {25.0, 32.0};
+  complexe_float_t c3;
 
- complexe_double_t cd1 ;
- complexe_double_t cd2 ;
- complexe_double_t cd3 ;
+  complexe_double_t cd1;
+  complexe_double_t cd2;
+  complexe_double_t cd3;
 
- unsigned long long int start, end ;
- int i ;
+  unsigned long long int start, end;
+  int i;
 
- // Partie addition
+  // Partie addition
 
- printf("\n");
- printf("Tests de la fonction d'addition de complexes\n");
- printf("\n");
+  printf("\n");
+  printf("Tests des fonctions d'addition de complexes\n");
+  printf("\n");
+  printf("Float\n");
+  printf("\n");
 
- init_flop () ;
- 
- c3 = add_complexe_float (c1, c2) ;
+  init_flop();
 
- printf ("c3.r %f c3.i %f\n", c3.real, c3.imaginary) ;
+  printf("Addition de :\n");
+  printf("C1 : %f + i x %f , C2 : %f + i x %f\n", c1.real, c1.imaginary, c2.real, c2.imaginary);
+  c3 = add_complexe_float(c1, c2);
+  printf("Resultat : %f + i x %f\n", c3.real, c3.imaginary);
+  printf("Evaluation des performances : \n");
 
- cd1 = (complexe_double_t) {10.0, 7.0} ;
- cd2 = (complexe_double_t) {25.0, 32.0} ;
+  start = _rdtsc();
+  for (i = 0; i < NB_FOIS; i++)
+  {
+    c3 = add_complexe_float(c1, c2);
+  }
+  end = _rdtsc();
 
- cd3 = add_complexe_double (cd1, cd2) ;
+  printf("Nombre de cycles :  %lld cycles \n", end - start);
+  calcul_flop("Addition de complexes Float", NB_FOIS * 2, end - start);
 
- printf ("cd3.r %f cd3.i %f\n", cd3.real, cd3.imaginary) ;
 
- start =_rdtsc () ;
- 
- for (i = 0 ; i < NB_FOIS; i++)
-   {
-     cd3 = add_complexe_double (cd1, cd2) ;
-   }
+  cd1 = (complexe_double_t){10.0, 7.0};
+  cd2 = (complexe_double_t){25.0, 32.0};
 
- end = _rdtsc () ;
 
-  printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
+  printf("Double\n");
+  printf("\n");
 
-  // L'appel d'une fonction (pas inline) a un coût bien plus important que celui du calcul de la fonctions
+  printf("Addition de :\n");
+  printf("CD1 : %f + i x %f , CD2 : %f + i x %f\n", cd1.real, cd1.imaginary, cd2.real, cd2.imaginary);
+  cd3 = add_complexe_double(cd1, cd2);
+  printf("Resultat : %f + i x %f\n", cd3.real, cd3.imaginary);
+  printf("Evaluation des performances : \n");
 
-  calcul_flop ("calcul complexe ", NB_FOIS*2, end-start) ;
+  start = _rdtsc();
 
-  // 
+  for (i = 0; i < NB_FOIS; i++)
+  {
+    cd3 = add_complexe_double(cd1, cd2);
+  }
+
+  end = _rdtsc();
+
+
+  printf("Nombre de cycles :  %lld cycles \n", end - start);
+  calcul_flop("Addition de complexes Double", NB_FOIS * 2, end - start);
 
   // Partie multiplication
 
   printf("\n");
-  printf("Tests de la fonction de multiplication de complexes\n");
+  printf("Tests des fonctions de multiplication de complexes\n");
+  printf("\n");
+  printf("Float\n");
   printf("\n");
 
-  init_flop () ;
- 
- c3 = mult_complexe_float (c1, c2) ;
+  printf("Multiplication de :\n");
+  printf("C1 : %f + i x %f , C2 : %f + i x %f\n", c1.real, c1.imaginary, c2.real, c2.imaginary);
+  c3 = mult_complexe_float(c1, c2);
+  printf("Resultat : %f + i x %f\n", c3.real, c3.imaginary);
+  printf("Evaluation des performances : \n");
 
- printf ("c3.r %f c3.i %f\n", c3.real, c3.imaginary) ;
+  start = _rdtsc();
+  for (i = 0; i < NB_FOIS; i++)
+  {
+    c3 = mult_complexe_float(c1, c2);
+  }
+  end = _rdtsc();
 
- cd1 = (complexe_double_t) {10.0, 7.0} ;
- cd2 = (complexe_double_t) {25.0, 32.0} ;
+  printf("Nombre de cycles :  %lld cycles \n", end - start);
+  calcul_flop("Multiplication de complexes Float", NB_FOIS * 6, end - start);
 
- cd3 = mult_complexe_double (cd1, cd2) ;
+  cd1 = (complexe_double_t){10.0, 7.0};
+  cd2 = (complexe_double_t){25.0, 32.0};
 
- printf ("cd3.r %f cd3.i %f\n", cd3.real, cd3.imaginary) ;
+  printf("Double\n");
+  printf("\n");
 
- start =_rdtsc () ;
- 
- for (i = 0 ; i < NB_FOIS; i++)
-   {
-     cd3 = mult_complexe_double (cd1, cd2) ;
-   }
+  printf("Multiplication de :\n");
+  printf("CD1 : %f + i x %f , CD2 : %f + i x %f\n", cd1.real, cd1.imaginary, cd2.real, cd2.imaginary);
+  cd3 = mult_complexe_double(cd1, cd2);
+  printf("Resultat : %f + i x %f\n", cd3.real, cd3.imaginary);
+  printf("Evaluation des performances : \n");
 
- end = _rdtsc () ;
+  start = _rdtsc();
 
-  printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
+  for (i = 0; i < NB_FOIS; i++)
+  {
+    cd3 = mult_complexe_double(cd1, cd2);
+  }
 
-  calcul_flop ("calcul complexe ", NB_FOIS*6, end-start) ;
+  end = _rdtsc();
 
+
+  printf("Nombre de cycles :  %lld cycles \n", end - start);
+  calcul_flop("Addition de complexes Double", NB_FOIS * 6, end - start);
 
   // Partie division
 
   printf("\n");
-  printf("Tests de la fonction de division de complexes\n");
+  printf("Tests des fonctions de division de complexes\n");
+  printf("\n");
+  printf("Float\n");
   printf("\n");
 
-  init_flop () ;
- 
- c3 = div_complexe_float (c1, c2) ;
+  printf("Multiplication de :\n");
+  printf("C1 : %f + i x %f , C2 : %f + i x %f\n", c1.real, c1.imaginary, c2.real, c2.imaginary);
+  c3 = div_complexe_float(c1, c2);
+  printf("Resultat : %f + i x %f\n", c3.real, c3.imaginary);
+  printf("Evaluation des performances : \n");
 
- printf ("c3.r %f c3.i %f\n", c3.real, c3.imaginary) ;
+  start = _rdtsc();
+  for (i = 0; i < NB_FOIS; i++)
+  {
+    c3 = div_complexe_float(c1, c2);
+  }
+  end = _rdtsc();
 
- cd1 = (complexe_double_t) {10.0, 7.0} ;
- cd2 = (complexe_double_t) {25.0, 32.0} ;
+  printf("Nombre de cycles :  %lld cycles \n", end - start);
+  calcul_flop("Division de complexes Float", NB_FOIS * 11, end - start);
 
- cd3 = div_complexe_double (cd1, cd2) ;
+  cd1 = (complexe_double_t){10.0, 7.0};
+  cd2 = (complexe_double_t){25.0, 32.0};
 
- printf ("cd3.r %f cd3.i %f\n", cd3.real, cd3.imaginary) ;
+  printf("Double\n");
+  printf("\n");
 
- start =_rdtsc () ;
- 
- for (i = 0 ; i < NB_FOIS; i++)
-   {
-     cd3 = div_complexe_double (cd1, cd2) ;
-   }
+  printf("Division de :\n");
+  printf("CD1 : %f + i x %f , CD2 : %f + i x %f\n", cd1.real, cd1.imaginary, cd2.real, cd2.imaginary);
+  cd3 = div_complexe_double(cd1, cd2);
+  printf("Resultat : %f + i x %f\n", cd3.real, cd3.imaginary);
+  printf("Evaluation des performances : \n");
 
- end = _rdtsc () ;
+  start = _rdtsc();
 
-  printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
+  for (i = 0; i < NB_FOIS; i++)
+  {
+    cd3 = div_complexe_double(cd1, cd2);
+  }
 
-  calcul_flop ("calcul complexe ", NB_FOIS*11, end-start) ;
+  end = _rdtsc();
 
 
+  printf("Nombre de cycles :  %lld cycles \n", end - start);
+  calcul_flop("Division de complexes Double", NB_FOIS * 11, end - start);
 
-  exit (0) ;
+  exit(0);
 }
