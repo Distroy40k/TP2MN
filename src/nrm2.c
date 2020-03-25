@@ -1,5 +1,6 @@
 #include "mnblas.h"
 #include "utils.h"
+#include "complexe2.h"
 
 #include <math.h>
 
@@ -23,20 +24,20 @@ double mnblas_dnrm2(const int N, const double *X, const int incX) {
 
 float  mnblas_scnrm2(const int N, const void *X, const int incX) {
   register unsigned int i = 0 ;
-  float * Xp = (float *)X;
+  complexe_float_t * Xp = (complexe_float_t *)X;
   float res = 0;
   for (; (i < N) ; i += incX) {
-    res += mn_squaref(Xp[2 * i]) + mn_squaref(Xp[2 * i + 1]);
+    res += mn_squaref(Xp[i].real) + mn_squaref(Xp[i].imaginary);
   }
   return sqrt(res);
 }
 
 double mnblas_dznrm2(const int N, const void *X, const int incX) {
   register unsigned int i = 0 ;
-  double * Xp = (double *)X;
+  complexe_double_t * Xp = (complexe_double_t *)X;
   double res = 0;
   for (; (i < N) ; i += incX) {
-    res += mn_squaref(Xp[2 * i]) + mn_squaref(Xp[2 * i + 1]);
+    res += mn_squaref(Xp[i].real) + mn_squaref(Xp[i].imaginary);
   }
   return sqrt(res);
 
