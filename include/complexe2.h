@@ -13,14 +13,14 @@ typedef struct {
 inline complexe_float_t init_complexe_float (const float real, const float img) {
   complexe_float_t r;
   r.real = real;
-  r.img = img;
+  r.imaginary = img;
   return r;
 }
 
 inline complexe_double_t init_complexe_double (const double real, const double img) {
   complexe_double_t r;
   r.real = real;
-  r.img = img;
+  r.imaginary = img;
   return r;
 }
 
