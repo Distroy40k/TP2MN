@@ -5,6 +5,8 @@
 
 #include "flop.h"
 
+#include "complexe2.h"
+
 #define NB_FOIS 45126
 
 void fvector_init(FILE *f, float *V, int n) {
@@ -41,6 +43,7 @@ void dmatrice_init(FILE* f, double *A, int n) {
 
 void fvectorC_init(FILE *f, float *V, int n) {
   for (int i = 0; i < n; i++) {
+
       if (fscanf(f, "%f", V + 2 * i) != 1){
         printf("Failed to read fvectorC.\n");
     }
@@ -303,8 +306,6 @@ int main(int argc, char **argv) {
     }
   }
 
-  unsigned long long int start, end ;
-  init_flop () ;
   printf("\nTests des fonctions de gemm\n\n");
 
   switch (mode) {
@@ -318,14 +319,8 @@ int main(int argc, char **argv) {
         for (int i =0; i < n ; i++) {
           printf("%f ", fC[i]);
         }
-      printf("\n");
+        printf("\n");
       }
-      start = _rdtsc () ;
-      for (int k=0; k<NB_FOIS; k++){
-        mncblas_sgemm(MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, n, n, n, falpha[0], fA, 0, fB, 1, fbeta[0], fC, 1);
-      }
-      end = _rdtsc () ;
-      calcul_flop ("Tests de mncblas_sgemm", n * n * ((n * 2) + 3 ) * NB_FOIS, end-start) ;
       break;
 
     case 'd':
@@ -339,12 +334,6 @@ int main(int argc, char **argv) {
         }
       printf("\n");
       }
-      start = _rdtsc () ;
-      for (int k=0; k<NB_FOIS; k++){
-        mncblas_dgemm(MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, n, n, n, dalpha[0], dA, 0, dB, 1, dbeta[0], dC, 1);
-      }
-      end = _rdtsc () ;
-      calcul_flop ("Tests de mncblas_dgemm", n * n * ((n * 2) + 3 ) * NB_FOIS, end-start) ;
       break;
 
     case 'c':
@@ -359,12 +348,6 @@ int main(int argc, char **argv) {
         }
       printf("\n");
       }
-      start = _rdtsc () ;
-      for (int k=0; k<NB_FOIS; k++){
-        mncblas_cgemm(MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, n, n, n, falpha, fA, 0, fB, 1, fbeta, fC, 1);
-      }
-      end = _rdtsc () ;
-      calcul_flop ("Tests de mncblas_cgemm", n * n * ((n * 8) + 14) * NB_FOIS, end-start) ;
       break;
 
     case 'z':
@@ -379,12 +362,6 @@ int main(int argc, char **argv) {
         }
       printf("\n");
       }
-      start = _rdtsc () ;
-      for (int k=0; k<NB_FOIS; k++){
-        mncblas_zgemm(MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, n, n, n, dalpha, dA, 0, dB, 1, dbeta, dC, 1);
-      }
-      end = _rdtsc () ;
-      calcul_flop ("Tests de mncblas_zgemm",  n * n * ((n * 8) + 14) * NB_FOIS , end-start) ;
       break;
 
     default:

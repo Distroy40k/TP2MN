@@ -1,15 +1,22 @@
 #include "mnblas.h"
+#include "complexe2.h"
 
 void mncblas_sgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, MNCBLAS_TRANSPOSE TransB, const int M, const int N, const int K, const float alpha, 
 const float *A, const int lda, const float *B, const int ldb, const float beta, float *C, const int ldc){
 
-                    for (int k = 0; k<M ; k++){
-                        for (int i = 0; i<M ; i++){
-                            C [i + k*M] *= (beta/alpha);
-                            for (int j = 0; j<N ; j++){
-                                C [i + k*M] += A [j + k*M] * B [i + j*M]; 
+                    register unsigned int k = 0;
+                    register unsigned int i;
+                    register unsigned int j;
+                    register unsigned int K_M;
+
+                    for (; k<M ; k++){
+                        K_M = k*M;
+                        for (i = 0 ; i<M ; i++) {
+                            C [i + K_M] *= (beta/alpha);
+                            for (j = 0; j<N ; j++) {
+                                C [i + K_M] += A [j + K_M] * B [i + j*M]; 
                             }
-                            C [i + k*M] *= alpha;
+                            C [i + K_M] *= alpha;
                         }
                     }
                  }
@@ -17,13 +24,19 @@ const float *A, const int lda, const float *B, const int ldb, const float beta, 
 void mncblas_dgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, MNCBLAS_TRANSPOSE TransB, const int M, const int N, const int K, const double alpha, 
 const double *A, const int lda, const double *B, const int ldb, const double beta, double *C, const int ldc){
 
-                    for (int k = 0; k<M ; k++){
-                        for (int i = 0; i<M ; i++){
-                            C [i + k*M] *= (beta/alpha);
-                            for (int j = 0; j<N ; j++){
-                                C [i + k*M] += A [j + k*M] * B [i + j*M]; 
+                    register unsigned int k = 0;
+                    register unsigned int i;
+                    register unsigned int j;
+                    register unsigned int K_M;
+
+                    for (; k<M ; k++){
+                        K_M = k*M;
+                        for (i = 0 ; i<M ; i++) {
+                            C [i + K_M] *= (beta/alpha);
+                            for (j = 0; j<N ; j++) {
+                                C [i + K_M] += A [j + K_M] * B [i + j*M]; 
                             }
-                            C [i + k*M] *= alpha;
+                            C [i + K_M] *= alpha;
                         }
                     }
                  }
@@ -33,26 +46,33 @@ const void *A, const int lda, const void *B, const int ldb, const void *beta, vo
 
                     float * alpha_tab = (float *)alpha;
                     float * beta_tab = (float *)beta;
-                    float * A_tab = (float *)A;
-                    float * B_tab = (float *)B;
-                    float * C_tab = (float *)C;
+                    complexe_float_t * A_tab = (complexe_float_t *)A;
+                    complexe_float_t * B_tab = (complexe_float_t *)B;
+                    complexe_float_t * C_tab = (complexe_float_t *)C;
 
-                    float tmp_C1[2];
-                    float tmp_C2;
+                    register unsigned int k = 0;
+                    register unsigned int i;
+                    register unsigned int j;
+                    register unsigned int K_M;
 
-                    for (int k = 0; k<M ; k++){
-                        for (int i = 0; i<M ; i++){ 
-                            tmp_C1[0] = beta_tab[0] * C_tab[2*i + 2*k*M] - (beta_tab[1] * C_tab[2*i + 1 + 2*k*M]);
-                            tmp_C1[1] = beta_tab[1] * C_tab[2*i + 2*k*M] + (beta_tab[0] * C_tab[2*i + 1 + 2*k*M]);
-                            C_tab [2*i + 2*k*M] = 0;
-                            C_tab [2*i + 1 + 2*k*M] = 0; 
-                            for (int j = 0; j<N ; j++){
-                                C_tab [2*i + 2*k*M] += (A_tab [2*j + 2*k*M] * B_tab [2*i + 2*j*M]) - (A_tab [2*j + 2*k*M + 1] * B_tab [2*i + 2*j*M + 1]); 
-                                C_tab [2*i + 2*k*M + 1] += (A_tab [2*j + 2*k*M ] * B_tab [2*i + 2*j*M + 1]) + (A_tab [2*j + 2*k*M + 1 ] * B_tab [2*i + 2*j*M]); 
+                    complexe_float_t alpha_c;
+                    complexe_float_t beta_c;
+                    complexe_float_t beta_div_alpha;
+                    complexe_float_t A_B;
+                    alpha_c = (complexe_float_t){alpha_tab[0], alpha_tab[1]};
+                    beta_c = (complexe_float_t){beta_tab[0], beta_tab[1]};
+                    beta_div_alpha = div_complexe_float(beta_c, alpha_c);
+
+
+                    for (; k<M ; k++) {
+                        K_M = k*M;
+                        for (i = 0; i<M ; i++) { 
+                            C_tab [i + K_M] = mult_complexe_float(C_tab [i + K_M], beta_div_alpha);
+                            for (j = 0; j<N ; j++){
+                                A_B = mult_complexe_float(A_tab [j + K_M], B_tab[i + j*M]);
+                                C_tab[i + K_M] = add_complexe_float(C_tab[i + K_M], A_B);
                             }
-                            tmp_C2 = C_tab [2*i + 2*k*M];
-                            C_tab [2*i + 2*k*M] = alpha_tab [0] * C_tab [2*i + 2*k*M] - alpha_tab [1] * C_tab [2*i + 1 + 2*k*M] + tmp_C1[0];
-                            C_tab [2*i + 2*k*M + 1] = alpha_tab [1] * tmp_C2 + alpha_tab[0] * C_tab [2*i + 1 + 2*k*M ] + tmp_C1[1];
+                            C_tab[i + K_M] = mult_complexe_float(C_tab[i + K_M], alpha_c);
                         }
                     }
                  }
@@ -60,28 +80,29 @@ const void *A, const int lda, const void *B, const int ldb, const void *beta, vo
 void mncblas_zgemm (MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, MNCBLAS_TRANSPOSE TransB, const int M, const int N, const int K, const void *alpha, 
 const void *A, const int lda, const void *B, const int ldb, const void *beta, void *C, const int ldc){
 
-                    double * alpha_tab = (double *)alpha;
-                    double * beta_tab = (double *)beta;
-                    double * A_tab = (double *)A;
-                    double * B_tab = (double *)B;
-                    double * C_tab = (double *)C;
+                    complexe_double_t * A_tab = (complexe_double_t *)A;
+                    complexe_double_t * B_tab = (complexe_double_t *)B;
+                    complexe_double_t * C_tab = (complexe_double_t *)C;
 
-                    double tmp_C1[2];
-                    double tmp_C2;
+                    register unsigned int k = 0;
+                    register unsigned int i;
+                    register unsigned int j;
+                    register unsigned int K_M;
+                    register unsigned int I_K_M;
 
-                    for (int k = 0; k<M ; k++){
-                        for (int i = 0; i<M ; i++){ 
-                            tmp_C1[0] = beta_tab[0] * C_tab[2*i + 2*k*M] - (beta_tab[1] * C_tab[2*i + 1 + 2*k*M]);
-                            tmp_C1[1] = beta_tab[1] * C_tab[2*i + 2*k*M] + (beta_tab[0] * C_tab[2*i + 1 + 2*k*M]);
-                            C_tab [2*i + 2*k*M] = 0;
-                            C_tab [2*i + 1 + 2*k*M] = 0; 
-                            for (int j = 0; j<N ; j++){
-                                C_tab [2*i + 2*k*M] += (A_tab [2*j + 2*k*M] * B_tab [2*i + 2*j*M]) - (A_tab [2*j + 2*k*M + 1] * B_tab [2*i + 2*j*M + 1]); 
-                                C_tab [2*i + 2*k*M + 1] += (A_tab [2*j + 2*k*M ] * B_tab [2*i + 2*j*M + 1]) + (A_tab [2*j + 2*k*M + 1 ] * B_tab [2*i + 2*j*M]); 
+                    complexe_double_t *alpha_c = (complexe_double_t *)alpha;
+                    complexe_double_t *beta_c = (complexe_double_t *)beta;
+                    complexe_double_t beta_div_alpha = div_complexe_double(*beta_c, *alpha_c);
+
+                    for (; k<M ; k++) {
+                        K_M = k*M;
+                        for (i = 0; i<M ; i++) { 
+                            I_K_M = i + K_M;
+                            C_tab [I_K_M] = mult_complexe_double(C_tab [I_K_M], beta_div_alpha);
+                            for (j = 0; j<N ; j++){
+                                C_tab[I_K_M] = add_complexe_double(C_tab[I_K_M], mult_complexe_double(A_tab [j + K_M], B_tab[i + j*M]));
                             }
-                            tmp_C2 = C_tab [2*i + 2*k*M];
-                            C_tab [2*i + 2*k*M] = alpha_tab [0] * C_tab [2*i + 2*k*M] - alpha_tab [1] * C_tab [2*i + 1 + 2*k*M] + tmp_C1[0];
-                            C_tab [2*i + 2*k*M + 1] = alpha_tab [1] * tmp_C2 + alpha_tab[0] * C_tab [2*i + 1 + 2*k*M ] + tmp_C1[1];
+                            C_tab[I_K_M] = mult_complexe_double(C_tab[I_K_M], *alpha_c);
                         }
                     }
                  }
