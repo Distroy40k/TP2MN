@@ -2,10 +2,10 @@
 #include <x86intrin.h>
 
 #include "mnblas.h"
-
+#include "complexe2.h"
 #include "flop.h"
 
-#define N 258
+#define N 128
 #define NB_FOIS 10
 
 void fvector_init(float *V, float x) {
@@ -29,119 +29,106 @@ void dmatrice_init(double *A,double x) {
     A[i] = x;
   }
 }
-void fmatriceC_init(float *A, float x) {
+void fmatriceC_init(complexe_float_t *A, complexe_float_t x) {
   for (int i = 0; i < N * N; i++) {
-    A[2 * i] = x;
-    A[2 * i + 1] = x;
+    A[i] = x;
   }
 }
-void dmatriceC_init(double *A, double x) {
+void dmatriceC_init(complexe_double_t *A, complexe_double_t x) {
   for (int i = 0; i < N * N; i++) {
-    A[2 * i] = x;
-    A[2 * i + 1] = x;
+    A[i] = x;
   }
 }
 
-void fvectorC_init(float *V, float x) {
+void fvectorC_init(complexe_float_t *V, complexe_float_t x) {
   for (int i = 0; i < N ; i++) {
-    V[2 * i] = x;
-    V[2 * i + 1] = x;
+    V[i] = x;
   }
 }
 
-void dvectorC_init(double *V, double x) {
+void dvectorC_init(complexe_double_t *V, complexe_double_t x) {
   for (int i = 0; i < N; i++) {
-    V[2 * i] = x;
-    V[2 * i + 1] = x;
+    V[i] = x;
   }
 }
 
 
 int main(int argc, char **argv) {
   int i;
-  float *fA;
-  double *dA;
-  float *fX;
-  double *dX;
-  float *fY;
-  double *dY;
+  float fA[N * N];
+  double dA[N * N];
+  float fX[N];
+  double dX[N];
+  float fY[N];
+  double dY[N];
 
-  float falpha[2] = {(float)1 , (float)1};
-  double dalpha[2] = {(double)1, (double)1};
-  float fbeta[2] = {(float)1, (float)1};
-  double dbeta[2] = {(double)1, (double)1};
+  complexe_float_t CfA[N * N];
+  complexe_double_t CdA[N * N];
+  complexe_float_t CfX[N];
+  complexe_double_t CdX[N];
+  complexe_float_t CfY[N];
+  complexe_double_t CdY[N];
+
+  float falpha = (float)1;
+  float fbeta = (float)1;
+  double dalpha = (double)1;
+  double dbeta = (double)1;
+  complexe_float_t Cfalpha = init_complexe_float((float) 1, (float) 1);
+  complexe_double_t Cdalpha = init_complexe_double((double) 1, (double) 1);
+  complexe_float_t Cfbeta = init_complexe_float((float) 1, (float) 1);
+  complexe_double_t Cdbeta = init_complexe_double((double) 1, (double) 1);
 
   unsigned long long int start, end ;
 
   init_flop () ;
   printf("\nTests des fonctions de gemv\n\n");
-
   printf("\n##################\nTests de mncblas_sgemv\n##################\n");
-  fA = (float *) malloc (sizeof(float) * N * N);
-  fX = (float *) malloc (sizeof(float) * N);
-  fY = (float *) malloc (sizeof(float) * N);
   fmatrice_init(fA, (float)1);
   fvector_init(fX, (float)1);
   fvector_init(fY, (float)1);
+  mncblas_sgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, falpha, fA, 0, fX, 1, fbeta, fY, 1);
   start = _rdtsc () ;
   for (i = 0; i < NB_FOIS; i ++) {
-      mncblas_sgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, falpha[0], fA, 0, fX, 1, fbeta[0], fY, 1);
+      mncblas_sgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, falpha, fA, 0, fX, 1, fbeta, fY, 1);
   }
   end = _rdtsc () ;
   calcul_flop ("Tests de mncblas_sgemv", N * (2 * N + 3) * NB_FOIS, end-start) ;
 
   printf("\n##################\nTests de mncblas_dgemv\n##################\n");
-  dA = (double *) malloc (sizeof(double) * N * N);
-  dX = (double *) malloc (sizeof(double) * N);
-  dY = (double *) malloc (sizeof(double) * N);
   dmatrice_init(dA, (double)1);
   dvector_init(dX, (double)1);
   dvector_init(dY, (double)1);
+  mncblas_dgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, dalpha, dA, 0, dX, 1, dbeta, dY, 1);
   start = _rdtsc () ;
   for (i = 0; i < NB_FOIS; i ++) {
-    mncblas_dgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, dalpha[0], dA, 0, dX, 1, dbeta[0], dY, 1);
+    mncblas_dgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, dalpha, dA, 0, dX, 1, dbeta, dY, 1);
   }
   end = _rdtsc () ;
   calcul_flop ("Tests de mncblas_dgemv", N * (2 * N +3) * NB_FOIS, end-start) ;
 
   printf("\n##################\nTests de mncblas_cgemv\n##################\n");
-  free(fA);
-  free(fX);
-  free(fY);
-  fA = (float *) malloc (sizeof(float) * N * N * 2);
-  fX = (float *) malloc (sizeof(float) * N * 2);
-  fY = (float *) malloc (sizeof(float) * N * 2);
-  fmatriceC_init(fA, (float)1);
-  fvectorC_init(fX, (float)1);
-  fvectorC_init(fY, (float)1);
+  fmatriceC_init(CfA, init_complexe_float((float) 1, (float) 1));
+  fvectorC_init(CfX, init_complexe_float((float) 1, (float) 1));
+  fvectorC_init(CfY, init_complexe_float((float) 1, (float) 1));
+
+  mncblas_cgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, &Cfalpha, CfA, 0, CfX, 1, &Cfbeta, CfY, 1);
   start = _rdtsc () ;
   for (i = 0; i < NB_FOIS; i ++) {
-    mncblas_cgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, falpha, fA, 0, fX, 1, fbeta, fY, 1);
+    mncblas_cgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, &Cfalpha, CfA, 0, CfX, 1, &Cfbeta, CfY, 1);
   }
   end = _rdtsc () ;
   calcul_flop ("Tests de mncblas_cgemv", N * (14 + (N * 8)) * NB_FOIS, end-start) ;
 
   printf("\n##################\nTests de mncblas_zgemv\n##################\n");
-  free(dA);
-  free(dX);
-  free(dY);
-  dA = (double *) malloc (sizeof(double) * N * N * 2);
-  dX = (double *) malloc (sizeof(double) * N * 2);
-  dY = (double *) malloc (sizeof(double) * N * 2);
-  dmatriceC_init(dA, (double)1);
-  dvectorC_init(dX, (double)1);
-  dvectorC_init(dY, (double)1);
+  dmatriceC_init(CdA, init_complexe_double((double) 1, (double) 1));
+  dvectorC_init(CdX, init_complexe_double((double) 1, (double) 1));
+  dvectorC_init(CdY, init_complexe_double((double) 1, (double) 1));
+
+  mncblas_zgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, &Cdalpha, CdA, 0, CdX, 1, &Cdbeta, CdY, 1);
   start = _rdtsc () ;
   for (i = 0; i < NB_FOIS; i ++) {
-    mncblas_zgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, dalpha, dA, 0, dX, 1, dbeta, dY, 1);
+    mncblas_zgemv(MNCblasRowMajor, MNCblasNoTrans, N, N, &Cdalpha, CdA, 0, CdX, 1, &Cdbeta, CdY, 1);
   }
   end = _rdtsc () ;
   calcul_flop ("Tests de mncblas_zgemv", N * (14 + (N * 8)) * NB_FOIS, end-start) ;
-
-  free(fA);
-  free(fX);
-  free(fY);
-  free(dA);
-  free(dX);
-  free(dY);
 }
