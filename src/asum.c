@@ -1,5 +1,6 @@
 #include "mnblas.h"
 #include "utils.h"
+#include "complexe2.h"
 
 float  mnblas_sasum(const int N, const float *X, const int incX) {
   register unsigned int i = 0 ;
@@ -29,10 +30,10 @@ float  mnblas_scasum(const int N, const void *X, const int incX) {
   register unsigned int i = 0 ;
 
   float res = 0;
-  float *Xp = (float *)X;
+  complexe_float_t *Xp = (complexe_float_t *)X;
   for (; (i < N) ; i += incX)
     {
-      res += absf(Xp [2 * i]) + absf(Xp [2 * i + 1]);
+      res += absf(Xp[i].real) + absf(Xp[i].imaginary);
     }
 
   return res;
@@ -42,11 +43,10 @@ double mnblas_dzasum(const int N, const void *X, const int incX) {
   register unsigned int i = 0 ;
 
   double res = 0;
-  double * Xp = (double *) X;
+  complexe_double_t *Xp = (complexe_double_t *) X;
   for (; (i < N) ; i += incX)
     {
-      res += absd(Xp [2 * i]) + absd(Xp [2 * i + 1]);
+      res += absd(Xp[i].real) + absd(Xp[i].imaginary);
     }
-
   return res;
 }

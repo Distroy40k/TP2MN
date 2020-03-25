@@ -50,6 +50,7 @@ int main (int argc, char **argv)
       for (test = 0; test < NB_TEST; test ++) {
         printf("\n########### TEST %d############\n", test);
         init_vecteurf(fvector, (float) test);
+        resf = mnblas_sasum(SIZE_VECTOR, fvector, 1);
         start = _rdtsc () ;
         for (i = 0; i < NB_FOIS; i ++) {
            resf = mnblas_sasum(SIZE_VECTOR, fvector, 1);
@@ -68,6 +69,7 @@ int main (int argc, char **argv)
       for (test = 0; test < NB_TEST; test ++) {
         printf("\n########### TEST %d ############\n", test);
         init_vecteurd(dvector, (float) test);
+        resd = mnblas_dasum(SIZE_VECTOR, dvector, 1);
         start = _rdtsc () ;
         for (i = 0; i < NB_FOIS; i ++) {
            resd = mnblas_dasum(SIZE_VECTOR, dvector, 1);
@@ -86,6 +88,7 @@ int main (int argc, char **argv)
       for (test = 0; test < NB_TEST; test ++) {
         printf("\n########### TEST %d############\n",test);
         init_vecteurf(fvector, (float)test);
+        resf = mnblas_scasum(SIZE_VECTOR/2, fvector, 1);
         start = _rdtsc () ;
         for (i = 0; i < NB_FOIS; i ++) {
           resf = mnblas_scasum(SIZE_VECTOR/2, fvector, 1);
@@ -103,6 +106,7 @@ int main (int argc, char **argv)
       printf("\n##################\nTests de mnblas_dzasum\n##################\n");
         for (test = 0; test < NB_TEST; test ++) {
         printf("\n########### TEST %d ############\n", test);
+        resd = mnblas_dzasum(SIZE_VECTOR/2, dvector, 1);
         init_vecteurd(dvector, (float) test);
         start = _rdtsc () ;
         for (i = 0; i < NB_FOIS; i ++) {

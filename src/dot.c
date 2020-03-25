@@ -1,6 +1,8 @@
 #include "mnblas.h"
 #include <stdio.h>
 #include <math.h>
+#include "complexe2.h"
+
 /*
 float mncblas_sdot(const int N, const float *X, const int incX,
                  const float *Y, const int incY)
@@ -26,7 +28,7 @@ float mncblas_sdot(const int N, const float *X, const int incX,
   float dot = 0.0 ;
 
 
-  for (i = 0 ; i < N ; i += incX)
+  for (i; i < N ; i += incX)
     {
       dot += X [i] * Y [j] ;
       j+=incY ;
@@ -43,7 +45,7 @@ double mncblas_ddot(const int N, const double *X, const int incX,
   double dot = 0.0 ;
 
 
-  for (i = 0 ; i < N ; i += incX)
+  for (i; i < N ; i += incX)
     {
       dot += X [i] * Y [j] ;
       j+=incY ;
@@ -59,16 +61,13 @@ void   mncblas_cdotu_sub(const int N, const void *X, const int incX,
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
 
-  *((float *) dotu) = 0;
-  *(((float *) dotu) + 1) = 0;
+  complexe_float_t *res = (complexe_float_t *) dotu;
 
-  float * Xp = (float *) X;
-  float * Yp = (float *) Y;
+  complexe_float_t * Xp = (complexe_float_t *) X;
+  complexe_float_t * Yp = (complexe_float_t *) Y;
 
-  for (i = 0 ; i < N ; i += incX) {
-
-    *((float *) dotu) += (Xp [2 * i] * Yp [2 * j]) - (Xp [2 * i + 1] * Yp [2 * j + 1]);
-    *(((float *) dotu) + 1) += (Xp [2 * i + 1] * Yp [2 * j + 1]) + (Xp [2 * i + 1] * Yp [2 * j]);
+  for (; i < N ; i += incX) {
+    *res = add_complexe_float(*res,mult_complexe_float(Xp[i],Yp[j]));
     j+= incY;
   }
 
@@ -80,16 +79,13 @@ void   mncblas_cdotc_sub(const int N, const void *X, const int incX,
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
 
-  *((float *) dotc) = 0;
-  *(((float *) dotc) + 1) = 0;
+  complexe_float_t *res = (complexe_float_t *) dotc;
 
-  float * Xp = (float *) X;
-  float * Yp = (float *) Y;
+  complexe_float_t * Xp = (complexe_float_t *) X;
+  complexe_float_t * Yp = (complexe_float_t *) Y;
 
-  for (i = 0 ; i < N ; i += incX) {
-
-    *((float *) dotc) += (Xp [2 * i] * Yp [2 * j]) - (Xp [2 * i + 1] * Yp [2 * j + 1]);
-    *(((float *) dotc) + 1) += (-1 * Xp [2 * i + 1] * Yp [2 * j + 1]) + (-1 * Xp [2 * i + 1] * Yp [2 * j]);
+  for (; i < N ; i += incX) {
+    *res = add_complexe_float(*res,mult_complexe_float(conj_float(Xp[i]),Yp[j]));
     j+= incY;
   }
 }
@@ -100,30 +96,31 @@ void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
 
-  *((double *) dotu) = 0;
-  *(((double *) dotu) + 1) = 0;
+  complexe_double_t *res = (complexe_double_t *) dotu;
 
-  double * Xp = (double *) X;
-  double * Yp = (double *) Y;
+  complexe_double_t * Xp = (complexe_double_t *) X;
+  complexe_double_t * Yp = (complexe_double_t *) Y;
 
-  for (i = 0 ; i < N ; i += incX) {
-    *((double *) dotu) += (Xp [2 * i] * Yp [2 * j]) - (Xp [2 * i + 1] * Yp [2 * j + 1]);
-    *(((double *) dotu) + 1) += (Xp [2 * i + 1] * Yp [2 * j + 1]) + (Xp [2 * i + 1] * Yp [2 * j]);
+  for (; i < N ; i += incX) {
+    *res = add_complexe_double(*res,mult_complexe_double(Xp[i],Yp[j]));
     j+= incY;
   }
+
 }
 
 void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
-                       const void *Y, const int incY, void *dotc){
+                       const void *Y, const int incY, void *dotc)
+{
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-  *((double *) dotc) = 0;
-  *(((double *) dotc) + 1) = 0;
-  double * Xp = (double *) X;
-  double * Yp = (double *) Y;
-  for (i = 0 ; i < N ; i += incX) {
-    *((double *) dotc) += (Xp [2 * i] * Yp [2 * j]) - (Xp [2 * i + 1] * Yp [2 * j + 1]);
-    *(((double *) dotc) + 1) += (-1 * Xp [2 * i + 1] * Yp [2 * j + 1]) + (-1 * Xp [2 * i + 1] * Yp [2 * j]);
+
+  complexe_double_t *res = (complexe_double_t *) dotc;
+
+  complexe_double_t * Xp = (complexe_double_t *) X;
+  complexe_double_t * Yp = (complexe_double_t *) Y;
+
+  for (; i < N ; i += incX) {
+    *res = add_complexe_double(*res,mult_complexe_double(conj_double(Xp[i]),Yp[j]));
     j+= incY;
   }
 }

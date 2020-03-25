@@ -9,6 +9,21 @@ typedef struct {
   double imaginary ;
 } complexe_double_t ;
 
+inline complexe_float_t conj_float (const complexe_float_t x) {
+  complexe_float_t r;
+  r.real = x.real;
+  r.imaginary = - x.imaginary;
+  return r;
+}
+
+inline complexe_double_t conj_double (const complexe_double_t x) {
+  complexe_double_t r;
+  r.real = x.real;
+  r.imaginary = - x.imaginary;
+  return r;
+}
+
+
 
 inline complexe_float_t init_complexe_float (const float real, const float img) {
   complexe_float_t r;

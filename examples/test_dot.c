@@ -74,11 +74,12 @@ int main (int argc, char **argv)
      vector_init (vec2, 2.0) ;
      res = 0.0 ;
 
+     res = mncblas_sdot (VECSIZE, vec1, 1, vec2, 1) ;
      start = _rdtsc () ;
      for (i = 0 ; i < NB_FOIS; i++)
        {
         res = mncblas_sdot (VECSIZE, vec1, 1, vec2, 1) ;
-           }
+        }
      end = _rdtsc () ;
 
      printf ("mncblas_sdot : res = %3.2f nombre de cycles: %Ld \n",  res, end-start) ;
@@ -90,6 +91,7 @@ int main (int argc, char **argv)
     dvector_init (dvec1, 1.0) ;
     dvector_init (dvec2, 2.0) ;
     dres = 0.0 ;
+    dres = mncblas_ddot (VECSIZE, dvec1, 1, dvec2, 1) ;
     start = _rdtsc () ;
     for (i = 0 ; i < NB_FOIS; i++)
      {
@@ -106,6 +108,7 @@ int main (int argc, char **argv)
         printf("\n########### TEST #############\nFonction mncblas_cdotu_sub\n\n");
         vector_init (vec1, 1.0) ;
         vector_init (vec2, 2.0) ;
+        mncblas_cdotu_sub (VECSIZE/2, vec1, 1, vec2, 1, tmp_fres) ;
         start = _rdtsc () ;
         for (i = 0 ; i < NB_FOIS; i++)
          {
@@ -119,6 +122,7 @@ int main (int argc, char **argv)
         printf("\n########### TEST #############\nFonction mncblas_cdotc_sub\n\n");
          vector_init (vec1, 1.0) ;
          vector_init (vec2, 2.0) ;
+         mncblas_cdotc_sub (VECSIZE/2, vec1, 1, vec2, 1, tmp_fres) ;
          start = _rdtsc () ;
          for (i = 0 ; i < NB_FOIS; i++)
           {
@@ -137,7 +141,7 @@ int main (int argc, char **argv)
 
        dvector_init (dvec1, 1.0) ;
        dvector_init (dvec2, 2.0) ;
-
+       mncblas_zdotu_sub (VECSIZE/2, dvec1, 1, dvec2, 1, tmp_dres) ;
        start = _rdtsc () ;
        for (i = 0 ; i < NB_FOIS; i++)
         {
@@ -153,7 +157,7 @@ int main (int argc, char **argv)
 
        dvector_init (dvec1, 1.0) ;
        dvector_init (dvec2, 2.0) ;
-
+       mncblas_zdotc_sub (VECSIZE/2, dvec1, 1, dvec2, 1, tmp_dres) ;
        start = _rdtsc () ;
        for (i = 0 ; i < NB_FOIS; i++)
         {
