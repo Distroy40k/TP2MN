@@ -16,12 +16,18 @@ void init_flop ()
   end =_rdtsc () ;
 
   residu = end - start ;
-  
+
 }
 
 
 void calcul_flop (char *message, int nb_operations_flottantes, unsigned long long int cycles)
 {
   printf ("%s %d operations %5.3f GFLOP/s\n", message, nb_operations_flottantes, ((float) nb_operations_flottantes) / (((float) (cycles - residu)) * duree_cycle)) ;
+  return ;
+}
+
+void calcul_octet (char *message, int nb_operations_octet, unsigned long long int cycles)
+{
+  printf ("%s %d operations %5.3f GO/s\n", message, nb_operations_octet, ((float) nb_operations_octet) / (((float) (cycles - residu)) * duree_cycle)) ;
   return ;
 }
