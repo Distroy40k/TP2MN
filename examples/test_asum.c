@@ -7,7 +7,7 @@
 
 #define NB_TEST 5
 #define NB_FOIS 410
-#define SIZE_VECTOR 600000
+#define SIZE_VECTOR 256000
 
 void init_vecteurf(float* v, float x) {
   for (int i = 0; i < SIZE_VECTOR; i++) {
@@ -59,7 +59,7 @@ int main (int argc, char **argv)
         printf ("La somme d'un vecteur de float simple précision: %lld cycles \n", end-start) ;
         calcul_flop ("mnblas_sasum ", NB_FOIS * SIZE_VECTOR, end-start) ;
         if (resf != test * SIZE_VECTOR) {
-          printf("Erreur copie mnblas_sasum\n");
+          printf("Erreur copie mnblas_sasum. Res : %f; res Attendu: %d\n", resf, test * SIZE_VECTOR);
           exit(1);
         }
       }

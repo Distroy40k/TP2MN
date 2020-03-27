@@ -6,7 +6,6 @@ void mncblas_scopy(const int N, const float *X, const int incX,
 {
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-
   for (; ((i < N) && (j < N)) ; i += incX, j += incY)
     {
       Y [j] = X [i] ;

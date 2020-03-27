@@ -27,8 +27,7 @@ float mncblas_sdot(const int N, const float *X, const int incX,
   register unsigned int j = 0 ;
   float dot = 0.0 ;
 
-
-  for (; i < N ; i += incX)
+  for (i = 0; i < N ; i += incX)
     {
       dot += X [i] * Y [j] ;
       j+=incY ;
@@ -43,9 +42,7 @@ double mncblas_ddot(const int N, const double *X, const int incX,
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
   double dot = 0.0 ;
-
-
-  for (; i < N ; i += incX)
+  for (i = 0; i < N ; i += incX)
     {
       dot += X [i] * Y [j] ;
       j+=incY ;
@@ -66,7 +63,7 @@ void   mncblas_cdotu_sub(const int N, const void *X, const int incX,
   complexe_float_t * Xp = (complexe_float_t *) X;
   complexe_float_t * Yp = (complexe_float_t *) Y;
 
-  for (; i < N ; i += incX) {
+  for (i = 0; i < N ; i += incX) {
     *res = add_complexe_float(*res,mult_complexe_float(Xp[i],Yp[j]));
     j+= incY;
   }

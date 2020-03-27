@@ -6,7 +6,7 @@
 #include "flop.h"
 
 #define NB_FOIS 4000
-#define VECSIZE 4
+#define VECSIZE 8
 
 void fvector_init(float *V)
 {
@@ -120,7 +120,7 @@ int main(int argc, char **argv)
       end = _rdtsc();
       printf("mnblas_saxpy %d : nombre de cycles: %Ld \n", i, end - start);
       nb_boucles = VECSIZE / max(incX, incY);
-      calcul_flop("mnblas_saxpy ", nb_boucles * 2, end - start);
+      calcul_flop("mnblas_saxpy ", nb_boucles * 2 * NB_FOIS, end - start);
       printf("\n");
       break;
     case 'd':
@@ -147,7 +147,7 @@ int main(int argc, char **argv)
       end = _rdtsc();
       printf("mnblas_daxpy %d : nombre de cycles: %Ld \n", i, end - start);
       nb_boucles = VECSIZE / max(incX, incY);
-      calcul_flop("mnblas_daxpy ", nb_boucles * 2, end - start);
+      calcul_flop("mnblas_daxpy ", nb_boucles * 2 * NB_FOIS, end - start);
       printf("\n");
       break;
     case 'c':
@@ -176,7 +176,7 @@ int main(int argc, char **argv)
       end = _rdtsc();
       printf("mnblas_caxpy %d : nombre de cycles: %Ld \n", i, end - start);
       nb_boucles = VECSIZE / max(incX, incY);
-      calcul_flop("mnblas_caxpy ", nb_boucles * 4, end - start);
+      calcul_flop("mnblas_caxpy ", nb_boucles * 4 * NB_FOIS, end - start);
       printf("\n");
       break;
     case 'z':
@@ -204,7 +204,7 @@ int main(int argc, char **argv)
       end = _rdtsc();
       printf("mnblas_zaxpy %d : nombre de cycles: %Ld \n", i, end - start);
       nb_boucles = VECSIZE / max(incX, incY);
-      calcul_flop("mnblas_zaxpy ", nb_boucles * 4, end - start);
+      calcul_flop("mnblas_zaxpy ", nb_boucles * 4 * NB_FOIS, end - start);
       printf("\n");
       break;
     default:
