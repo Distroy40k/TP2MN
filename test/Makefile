@@ -1,4 +1,4 @@
-PROG=test_copy test_asum test_iamax test_iamin test_nrm2 test_swap test_axpy test_gemv test_gemm test_perf_gemv test_perf_gemm
+PROG=test_copy test_asum test_iamax test_iamin test_nrm2 test_swap test_axpy test_perf_gemv test_perf_gemm
 all: $(PROG)
 
 INC_DIR=../include
@@ -56,12 +56,6 @@ test_swap: test_swap.o flop.o $(LIB_DIR)/libmnblas.a
 test_swap.o: test_swap.c $(INC_DIR)/mnblas.h
 	gcc $(OPTIONS_COMPIL) -c test_swap.c
 
-test_gemv: test_gemv.o flop.o $(LIB_DIR)/libmnblas.a
-	gcc -o test_gemv test_gemv.o flop.o $(OPTIONS_LINK_STATIC)
-
-test_gemv.o: test_gemv.c $(INC_DIR)/mnblas.h
-	gcc $(OPTIONS_COMPIL) -c test_gemv.c
-
 test_perf_gemv: test_perf_gemv.o flop.o $(LIB_DIR)/libmnblas.a
 	gcc -o test_perf_gemv test_perf_gemv.o flop.o $(OPTIONS_LINK_STATIC)
 
@@ -74,17 +68,5 @@ test_perf_gemm: test_perf_gemm.o flop.o $(LIB_DIR)/libmnblas.a
 test_perf_gemm.o: test_perf_gemm.c $(INC_DIR)/mnblas.h
 	gcc $(OPTIONS_COMPIL) -c test_perf_gemm.c
 
-test_gemm: test_gemm.o flop.o $(LIB_DIR)/libmnblas.a
-	gcc -o test_gemm test_gemm.o flop.o $(OPTIONS_LINK_STATIC)
-
-test_gemm.o: test_gemm.c $(INC_DIR)/mnblas.h
-	gcc $(OPTIONS_COMPIL) -c test_gemm.c
-
-test: $(PROG)
-	@echo;echo "*** TESTS ***";echo;\
-	for file in $^;\
-		do echo ;\
-		./$$file 2>/dev/null || break;\
-	done
 clean:
 	rm -f *.o $(PROG) *~

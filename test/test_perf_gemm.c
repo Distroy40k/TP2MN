@@ -2,9 +2,7 @@
 #include <x86intrin.h>
 
 #include "mnblas.h"
-
 #include "flop.h"
-
 #include "complexe2.h"
 
 #define N  48
@@ -57,7 +55,7 @@ int main(int argc, char **argv) {
   complexe_double_t Cdalpha = init_complexe_double((double) 1, (double) 1);
   complexe_float_t Cfbeta = init_complexe_float((float) 1, (float) 1);
   complexe_double_t Cdbeta = init_complexe_double((double) 1, (double) 1);
-  
+
 
   unsigned long long int start, end ;
 

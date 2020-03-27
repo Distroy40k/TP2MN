@@ -5,8 +5,8 @@
 #include "complexe2.h"
 #include "flop.h"
 
-#define N 128
-#define NB_FOIS 10
+#define N 48
+#define NB_FOIS 1024
 
 void fvector_init(float *V, float x) {
   for (int i = 0; i < N; i++) {
