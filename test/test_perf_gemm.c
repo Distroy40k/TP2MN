@@ -7,8 +7,8 @@
 
 #include "complexe2.h"
 
-#define N 90
-#define NB_FOIS 10
+#define N  48
+#define NB_FOIS 1024
 
 
 void fmatrice_init( float *A, float x) {
@@ -110,5 +110,5 @@ int main(int argc, char **argv) {
     mncblas_zgemm(MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, N, N, N, &Cdalpha, CdA, 0, dB, 1, &Cdbeta, CdC, 1);
   }
   end = _rdtsc ();
-  calcul_flop ("Tests de mncblas_zgemm",  (N * N * (12 + N * 8) + 11) * NB_FOIS , end-start) ;
+  calcul_flop ("Tests de mncblas_zgemm",  (N * N * (12 + N * 8) + 11) * (unsigned long) NB_FOIS , end-start) ;
 }
