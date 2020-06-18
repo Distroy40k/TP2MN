@@ -98,7 +98,7 @@ void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
   complexe_double_t * Xp = (complexe_double_t *) X;
   complexe_double_t * Yp = (complexe_double_t *) Y;
 
-  for (; i < N ; i += incX) {
+  for (; i < N ; i += 1) { // De base i += incX, modif pour les performances
     *res = add_complexe_double(*res,mult_complexe_double(Xp[i],Yp[j]));
     j+= incY;
   }
@@ -116,7 +116,7 @@ void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
   complexe_double_t * Xp = (complexe_double_t *) X;
   complexe_double_t * Yp = (complexe_double_t *) Y;
 
-  for (; i < N ; i += incX) {
+  for (; i < N ; i += 1) { // De base i += incX, modif pour les performances
     *res = add_complexe_double(*res,mult_complexe_double(conj_double(Xp[i]),Yp[j]));
     j+= incY;
   }

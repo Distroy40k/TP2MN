@@ -25,7 +25,7 @@ void mncblas_sgemv(const MNCBLAS_LAYOUT layout, const MNCBLAS_TRANSPOSE TransA, 
     register unsigned int I_N;
 
     #pragma omp parallel for private(i, j, I_N)
-    for (i = 0; i < M; i += incX) {
+    for (i = 0; i < M; i += 1) { // De base i += incX, modif pour les performances
       Y[i] *= beta_alpha;
       I_N = i * N;
       for (j = 0; j < N; j += 8) {
@@ -51,7 +51,7 @@ void mncblas_dgemv(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, const int M,
     register unsigned int I_N;
 
     #pragma omp parallel for private(i, j, I_N)
-    for (i = 0; i < M; i += incX) {
+    for (i = 0; i < M; i += 1) { // De base i += incX, modif pour les performances
       Y[i] *= beta_alpha;
       I_N = i * N;
       for (j = 0; j < N; j += 8) {
@@ -81,7 +81,7 @@ void mncblas_cgemv(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, const int M,
     register complexe_float_t beta_alpha = div_complexe_float(*betap, *alphap);
 
     #pragma omp parallel for private(i, j)
-    for (i = 0; i < M; i += incX) {
+    for (i = 0; i < M; i += 1) { // De base i += incX, modif pour les performances
       Yp[i] = mult_complexe_float(Yp[i], beta_alpha);
       for (j = 0; j < N; j += 8) {
         Yp[i] = add_complexe_float(mult_complexe_float(Xp[i], Ap[i]), Yp[i]);
@@ -111,7 +111,7 @@ void mncblas_zgemv(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, const int M,
 
     #pragma omp parallel for private(i, j)
 
-    for (i = 0; i < M; i += incX) {
+    for (i = 0; i < M; i += 1) { // De base i += incX, modif pour les performances
       Yp[i] = mult_complexe_double(Yp[i], beta_alpha);
       for (j = 0; j < N; j += 8) {
         Yp[i] = add_complexe_double(mult_complexe_double(Xp[j], Ap[j]), Yp[i]);

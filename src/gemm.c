@@ -91,7 +91,7 @@ void mncblas_cgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, MNCBLAS_TRAN
   complexe_float_t *beta_c = (complexe_float_t *)beta;
   complexe_float_t beta_div_alpha = div_complexe_float(*beta_c, *alpha_c);
 
- #pragma omp parallel for private(i, j, K_M)
+ #pragma omp parallel for private(i, j, K_M, I_K_M)
   for (k = 0; k < M; ++k)
   {
     K_M = k * M;
@@ -133,7 +133,7 @@ void mncblas_zgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, MNCBLAS_TRAN
   complexe_double_t *beta_c = (complexe_double_t *)beta;
   complexe_double_t beta_div_alpha = div_complexe_double(*beta_c, *alpha_c);
 
-#pragma omp parallel for private(i, j, K_M)
+#pragma omp parallel for private(i, j, K_M, I_K_M)
   for (k = 0; k < M; ++k)
   {
     K_M = k * M;
